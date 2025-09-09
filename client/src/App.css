@@ -68,6 +68,15 @@
     cursor: pointer;
     transition: background-color 0.2s;
 }
+.add-btn{
+        background-color: #e11d48;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
 
 .delete-btn:hover {
     background-color: #be123c;

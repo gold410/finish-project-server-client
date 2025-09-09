@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../../App.css";
 import { useCreateProductMutation } from "./productApiSlice";
 
-const AddProductForm = () => {
+const AddProductForm = ({ onClose }) => {
 
     const[AddProduct]=useCreateProductMutation()
     const[formAddProduct,setFormAddProduct]=useState({
@@ -41,6 +41,8 @@ const AddProductForm = () => {
         kategory:"",
         inventory:""
         })
+
+        if (onClose) onClose()
     }
 return (
 <div className="add-product-page">

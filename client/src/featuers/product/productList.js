@@ -1,9 +1,12 @@
 import { useGetProductsQuery ,useDeleteProductMutation } from "./productApiSlice";
 import "../../App.css";
+import AddProductForm from './addProductForm'
+import { useState } from "react";
 
 const ProductList = () => {
   const { data: products = [], isLoading, isError, error } = useGetProductsQuery();
   const [deleteProduct]=useDeleteProductMutation()
+  const [showAdd,setShowAdd]=useState(false)
 
   if (isLoading) return <div className="loading">Loading...</div>;
   if (isError) return <div className="error">Error: {error.toString()}</div>;
@@ -11,9 +14,18 @@ const ProductList = () => {
   const handDelete=(productItem)=>{
     deleteProduct(productItem._id)
   }
+  const handleAdd=()=>{
+    setShowAdd(true)
+  }
+  const handleCloseForm=()=>{
+    setShowAdd(false)
+  }
+
 
   return (
     <div className="products-wrapper">
+      <button className="add-btn" onClick={()=>{handleAdd()}}>Add</button>
+      {showAdd&&<AddProductForm onClose={handleCloseForm}/>}
       <h1 className="products-title">Product List ({products.length})</h1>
       <div className="products-grid">
         {products.map((product) => (
