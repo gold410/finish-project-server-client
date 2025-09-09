@@ -1,31 +1,3 @@
-// import { useGetProductsQuery } from "./productApiSlice"
-
-// const ProductList=()=> {
-    
-//     const {data: products = [],isLoading, isSuccess, isError,error}=useGetProductsQuery()
-//     console.log(products,isLoading,isSuccess,isError)
-//     console.log({isError})
-//   return (
-//     <div>
-//         <h1>Product List ({products.length})</h1>
-//         {products.map((product) => (
-//         <div key={product.id} className="product-item">
-//             <div className="product-container">
-//             <h2 className="product-title">{product.productName}</h2>
-//             <p className="product-date">{product.price}</p>
-//             <p className="product-content">{product.description}</p>
-//             </div>
-//             <button className='delete-btn'>Delete</button>
-//         </div>
-// ))}
-
-//     </div>
-//   )
-// }
-
-// export default ProductList
-
-
 import { useGetProductsQuery ,useDeleteProductMutation } from "./productApiSlice";
 import "../../App.css";
 

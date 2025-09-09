@@ -1,5 +1,6 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRegisterMutation } from "./authApiSlice"
+import { useNavigate } from "react-router-dom"
 
 const Register=()=>{
 
@@ -10,7 +11,13 @@ const Register=()=>{
         password:"",
         email:"",
     })
+    const nav=useNavigate()
 
+    useEffect(()=>{
+     if(isSuccess){
+      nav('/')
+     }
+    },[isSuccess])
     const handleChange=(e)=>{
       setRegisterForm({...registerForm,[e.target.name]:e.target.value})
     }
@@ -27,7 +34,9 @@ const Register=()=>{
     }
     return<>
     <form onSubmit={handleSubmit}>
-      <h3>{isError&&JSON.stringify(error)}</h3>
+      <h4>{isError&&JSON.stringify(error)}</h4>
+      <h4>{isLoading&&<h4>LOADING...</h4>}</h4>
+      <h4 style={{color:"green"}}>{isSuccess&&<h4>המשתמש נוסף בהצלחה </h4>}</h4>
     <h2>Register Form</h2>
 
     <div>
