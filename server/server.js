@@ -20,12 +20,11 @@ app.use(express.static("public"))
 
 //להחליף להפניות לחנות
 app.use("/api/auth",require('./routs/autherRouts'))
-app.use(verifyJWT)
-app.use('/api/user',verifyJWT,require('./routs/userRouts'))
-app.use("/api/products",verifyJWT,require("./routs/productRouts"))
-app.use("/api/comment",verifyJWT,require('./routs/commentRouts'))
-app.use("/api/order",verifyJWT,require('./routs/orderRouts'))
-app.post('/api/uploads',verifyJWT,upload.single('image'),(req,res)=>{
+app.use("/api/products",require("./routs/productRouts"))
+app.use('/api/user',require('./routs/userRouts'))
+app.use("/api/comment",require('./routs/commentRouts'))
+app.use("/api/order",require('./routs/orderRouts'))
+app.post('/api/uploads',upload.single('image'),(req,res)=>{
     res.json(req.file)
 })
 
