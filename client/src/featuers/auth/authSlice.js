@@ -5,6 +5,14 @@ name:"auth",
 initialState:{
     token:localStorage.getItem("token")||"",
     isLoginUser:localStorage.getItem("token")?true:false,
+    user: (() => {
+        const userStr = localStorage.getItem("user");
+        try {
+            return userStr && userStr !== "undefined" ? JSON.parse(userStr) : null;
+        } catch {
+            return null;
+        }
+    })(),
 },
 reducers:{
     setToken:(state,action)=>{
@@ -12,6 +20,10 @@ reducers:{
     state.token=token
     state.isLoginUser=true
     localStorage.setItem("token",token)
+    },
+       setUser:(state,action)=>{
+        state.user=action.payload.user
+        localStorage.setItem("user",JSON.stringify(action.payload.user))
     },
     removeToken:(state)=>{
         state.token=""
@@ -21,4 +33,4 @@ reducers:{
 }
 })
 export default authSlice.reducer
-export const {setToken,removeToken}=authSlice.actions
+export const {setToken,removeToken, setUser}=authSlice.actions

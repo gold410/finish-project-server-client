@@ -24,7 +24,7 @@ const userInfo={
     phone:foundUser.phone,
     roles:foundUser.roles,
 }
-const token=jwt.sign(userInfo,process.env.Access_TOKEN_SECRETE)
+const token=jwt.sign(userInfo,process.env.ACCESS_TOKEN_SECRET)
 
  res.json({token:token})
 }

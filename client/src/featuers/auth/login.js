@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useLoginMutation } from "./authApiSlice"
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
-import { setToken } from "./authSlice"
+import { setToken ,setUser} from "./authSlice"
 
 const Login=()=>{
     const nav=useNavigate()
@@ -20,8 +20,12 @@ const Login=()=>{
 
     useEffect(()=>{
         if(isSuccess){
+            console.log("Login response:", data)
             nav('/home')
             dispatch(setToken(data))
+              if (data.user) {
+            dispatch(setUser({ user: data.user }))
+        }
         }
     },[isSuccess])
 

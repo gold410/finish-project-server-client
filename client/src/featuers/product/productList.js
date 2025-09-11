@@ -2,11 +2,15 @@ import { useGetProductsQuery ,useDeleteProductMutation } from "./productApiSlice
 import "../../App.css";
 import AddProductForm from './addProductForm'
 import { useState } from "react";
+import { useSelector } from "react-redux"
 
 const ProductList = () => {
   const { data: products = [], isLoading, isError, error } = useGetProductsQuery();
   const [deleteProduct]=useDeleteProductMutation()
   const [showAdd,setShowAdd]=useState(false)
+  const user=useSelector(state=>state.auth.user)
+
+  console.log("Current user:", user);
 
   if (isLoading) return <div className="loading">Loading...</div>;
   if (isError) return <div className="error">Error: {error.toString()}</div>;
@@ -24,7 +28,7 @@ const ProductList = () => {
 
   return (
     <div className="products-wrapper">
-      <button className="add-btn" onClick={()=>{handleAdd()}}>Add</button>
+      {user?.roles?.includes("Seller")&&<button className="add-btn" onClick={()=>{handleAdd()}}>Add</button>}
       {showAdd&&<AddProductForm onClose={handleCloseForm}/>}
       <h1 className="products-title">Product List ({products.length})</h1>
       <div className="products-grid">
@@ -35,7 +39,7 @@ const ProductList = () => {
               <h2 className="product-name">{product.productName}</h2>
               <p className="product-price">{product.price} ₪</p>
               <p className="product-description">{product.description}</p>
-              <button className="delete-btn" onClick={()=>{handDelete(product)}}>Delete</button>
+             {user?.roles?.includes("Seller")&&(<button className="delete-btn" onClick={()=>{handDelete(product)}}>Delete</button>)}
             </div>
           </div>
         ))}
