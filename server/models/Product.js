@@ -9,6 +9,12 @@ const productSchema=new mongoose.Schema({
         type: String,
         required:true 
     },
+    unitType:{
+        type:String,
+        enum:["יח'",
+            "קג'",
+            ],
+    },
     image:{
         type: String,
         required:true,
@@ -18,15 +24,10 @@ const productSchema=new mongoose.Schema({
     },
     kategory:{
         type:String,
-        enum:["בגדי נשים",
-            "בגדי גברים",
-            "ילדים",
-            "בית ומטבח",
-            "נעליים",
-            "תכשיטים",
-            "צעצועים",
-            "תינוקות",
-           " מכשירי חשמל"],
+        enum:["פרות",
+            "ירקות",
+            "עלים",
+            ],
     },
     //מלאי
     inventory:{

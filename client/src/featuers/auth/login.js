@@ -2,7 +2,8 @@ import { useEffect, useState } from "react"
 import { useLoginMutation } from "./authApiSlice"
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
-import { setToken ,setUser} from "./authSlice"
+import { removeToken, setToken ,setUser} from "./authSlice"
+import {jwtDecode} from "jwt-decode";
 
 const Login=()=>{
     const nav=useNavigate()
@@ -21,17 +22,21 @@ const Login=()=>{
     useEffect(()=>{
         if(isSuccess){
             console.log("Login response:", data)
-            nav('/home')
-            dispatch(setToken(data))
-              if (data.user) {
-            dispatch(setUser({ user: data.user }))
-        }
+            //שומר את הטוקן שקיבלתי
+            dispatch(setToken({token:data.token}))
+            //מפענח את הטוקן בצד קליינט
+             const decoded = jwtDecode(data.token)
+             //שומר את הטוקן המפוענח
+            dispatch(setUser({ user: decoded }))
+             nav('/home')
         }
     },[isSuccess])
 
-    const handleSubmit=(e)=>{
+    const handleSubmit =async(e)=>{
         e.preventDefault()
-        loginFunc(LoginForm)
+        //למחוק את הטוקן לפני התחברות חדשה
+        dispatch(removeToken())
+        await loginFunc(LoginForm)
         setLoginForm({
         userName:"",
         password:"",

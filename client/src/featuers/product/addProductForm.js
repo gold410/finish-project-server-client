@@ -11,7 +11,8 @@ const AddProductForm = ({ onClose }) => {
         price:"",
         description:"",
         kategory:"",
-        inventory:""
+        inventory:"",
+        unitType:""
     })
     const handleChange=(e)=>{
              const { name, value, type, files } = e.target;
@@ -31,6 +32,7 @@ const AddProductForm = ({ onClose }) => {
         data.append("description", formAddProduct.description);
         data.append("kategory", formAddProduct.kategory);
         data.append("inventory", formAddProduct.inventory);
+        data.append("unitType", formAddProduct.unitType);
 
         AddProduct(data)
         setFormAddProduct({
@@ -39,7 +41,8 @@ const AddProductForm = ({ onClose }) => {
         price:"",
         description:"",
         kategory:"",
-        inventory:""
+        inventory:"",
+        unitType:""
         })
 
         if (onClose) onClose()
@@ -63,6 +66,21 @@ return (
 
 
 <div className="field">
+  <label htmlFor="unitType">סוג מידה</label>
+  <div className="control">
+    <select
+      id="unitType"
+      name="unitType"
+      value={formAddProduct.unitType}
+      onChange={handleChange}
+    >
+      <option value="קג'">קילו</option>
+      <option value="יח'">יחידה</option>
+    </select>
+  </div>
+</div>
+
+<div className="field">
 <label htmlFor="price">מחיר</label>
 <div className="control"><input id="price" name="price" type="number" step="0.01"   value={formAddProduct.price} onChange={handleChange} /></div>
 </div>
@@ -82,10 +100,9 @@ value={formAddProduct.kategory}
 onChange={handleChange}
 >
 <option value="">בחר/י קטגוריה</option>
-<option>בגדי נשים</option>
-<option>בגדי גברים</option>
-<option>ילדים</option>
-<option>בית ומטבח</option>
+<option>פרות</option>
+<option>ירקות</option>
+<option>עלים</option>
 </select>
 </div>
 </div>
@@ -98,7 +115,7 @@ onChange={handleChange}
 
 
 <div className="actions">
-<button type="submit" className="btn save">שמור</button>
+<button type="submit" className="btn save">שמור/סגור טופס</button>
 </div>
 </form>
 </div>

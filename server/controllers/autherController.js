@@ -6,6 +6,7 @@ const login=async(req,res)=>{
 const {userName,password}=req.body
 if(!userName||!password)
     return res.status(400).json({message:'All fileds are requied'})
+console.log('userName from client:', userName);
 const foundUser=await User.findOne({userName}).lean()
 if(!foundUser||!foundUser.active)
    return res.status(409).json({message:'Unautherized'})
@@ -25,7 +26,7 @@ const userInfo={
     roles:foundUser.roles,
 }
 const token=jwt.sign(userInfo,process.env.ACCESS_TOKEN_SECRET)
-
+console.log('userInfo:', userInfo);
  res.json({token:token})
 }
 

@@ -24,9 +24,9 @@ const Navigation = () => {
         {/* תפריט נפתח */}
         {isOpen && (
           <div style={{ position: "absolute", top: "45px", right: "0", backgroundColor: "#f5f5f5", borderRadius: "5px", zIndex: 1 }}>
-            <NavLink to='/category/electronics' style={dropdownLinkStyle}>בגדי נשים</NavLink>
-            <NavLink to='/category/fashion' style={dropdownLinkStyle}>אופנה</NavLink>
-            <NavLink to='/category/home' style={dropdownLinkStyle}>בית</NavLink>
+            <NavLink to='/category/Fruits' style={dropdownLinkStyle}>פרות</NavLink>
+            <NavLink to='/category/Vegetables' style={dropdownLinkStyle}>ירקות</NavLink>
+            <NavLink to='/category/Leaves' style={dropdownLinkStyle}>עלים</NavLink>
           </div>
         )}
       </div>

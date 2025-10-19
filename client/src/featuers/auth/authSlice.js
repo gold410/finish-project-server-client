@@ -28,7 +28,10 @@ reducers:{
     removeToken:(state)=>{
         state.token=""
         state.isLoginUser=false
+        //כדי שמידע ישן של משתמש ימחק לחלוטין מהlocalStorge
+        state.user = null
         localStorage.removeItem("token")
+        localStorage.removeItem("user")
     }
 }
 })

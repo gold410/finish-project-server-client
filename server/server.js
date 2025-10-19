@@ -3,8 +3,6 @@ const express=require("express")
 const cors=require("cors")
 const mongoose=require('mongoose')
 //const multer=require('multer')
-const verifyJWT=require('./middleware/verifyJWT')
-
 const corsOptions = require("./config/corsOptions")
 const connectDB=require("./config/dbConn")
 const upload = require('./middleware/uploads');

@@ -21,7 +21,7 @@ const getProductById=async(req,res)=>{
 }
 
 const createNewProduct=async(req,res)=>{
-    const {productName,price,description,kategory,inventory}= req.body
+    const {productName,price,description,kategory,inventory,unitType}= req.body
     if (!req.file) {
         return res.status(400).json({ message: 'Image file is required' })
     }
@@ -29,7 +29,7 @@ const createNewProduct=async(req,res)=>{
     if(!productName||!price||!image){
         return res.status(400).json({message:'productName,price,image are required'})
     }
-    const newProduct=await Product.create({productName,price,image,description,kategory,inventory})
+    const newProduct=await Product.create({productName,price,image,description,kategory,inventory,unitType})
     if(newProduct){
         return res.status(201).json({message: "new product created"})
     }
@@ -40,7 +40,7 @@ const createNewProduct=async(req,res)=>{
 }
 
 const updateProduct=async(req,res)=>{
-    const {_id,productName,price,image,description,kategory,inventory}= req.body
+    const {_id,productName,price,image,description,kategory,inventory,unitType}= req.body
     if(!_id||!productName||!price||!image){
         return res.status(400).json({message:'_id,productName price,image are required'})
     }
@@ -54,6 +54,7 @@ const updateProduct=async(req,res)=>{
     product.description=description
     product.inventory=inventory
     product.kategory=kategory
+    product.unitType=unitType
     const updatedProduct=await product.save()
     res.json(`${updatedProduct.productName} updated`)
 }
