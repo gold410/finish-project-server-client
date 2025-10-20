@@ -1,9 +1,9 @@
 import React from 'react'
 
-function basketList() {
+function BasketList() {
   return (
     <div>basketList</div>
   )
 }
 
-export default basketList
+export default BasketList

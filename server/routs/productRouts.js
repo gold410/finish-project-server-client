@@ -7,6 +7,11 @@ router.get("/getAll", productController.getAllProducts);
 //router.get("/:id", productController.getProductById);
  router.post("/", upload.single("image"), productController.createNewProduct)
  router.delete("/:id",productController.deleteProduct)
- router.put("/:id",productController.updateProduct)
+router.put("/:id", (req, res, next) => {
+    upload.single("image")(req, res, err => {
+        if(err) return next(err)
+        next()
+    })
+}, productController.updateProduct)
 
 module.exports=router

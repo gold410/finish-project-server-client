@@ -35,6 +35,10 @@ const ProductList = () => {
     setShowUpdate(false)
   }
 
+  const handBasket=()=>{
+    alert("המוצר נוסף בהצלחה")
+  }
+
   const handleChangeQuantities=(productItem,value,unitType)=>{
     let newValue=value
     if(unitType==="יח'"){
@@ -50,7 +54,7 @@ const ProductList = () => {
     console.log("user roles:", user?.roles)
   return (
     <div className="products-wrapper">
-      {user?.roles==="Seller"&&<button className="add-btn" onClick={()=>{handleOpenAdd()}}>Add</button>}
+      {user?.roles==="Seller"&&<button className="add-btn" onClick={()=>{handleOpenAdd()}}>Add ➕</button>}
       {showAdd&&<AddProductForm onClose={handleCloseAdd}/>}
       {showUpdate&&<UpdateProductForm product={productToUpdate} onClose={handleCloseUpdate}/>}
       <h1 className="products-title">Product List ({products.length})</h1>
@@ -67,8 +71,9 @@ const ProductList = () => {
               <div className="field">
               {/* <label htmlFor={`quentity-${product._id}`}>{product.unitType}</label> */}
               <div className="controler">
+                {product.unitType === "יח'" ? "'יח" : "'קג"}
                 <input id="quentity" name="quentity" type="number" min={1} step={product.unitType === "יח'" ? 1 : 0.5} value={quentity} onChange={(e)=>{
-                let val = Number(e.target.value);
+                const val = Number(e.target.value);
                   if (product.unitType === "יח'") {
                     val = Math.max(1, Math.round(val)); // עיגול למספר שלם למוצרים ביחידות
                   } else {
@@ -78,11 +83,14 @@ const ProductList = () => {
                 }}/>
               </div>
               </div>
-              <p>מחיר: {(quentity*product.price).toFixed(2)} ₪({product.unitType === "יח'" ? "יח'" : "קג'"})</p>
+              <p className="product-price">מחיר: ₪{(quentity*product.price).toFixed(2)}</p>
+              {user?.roles==="User"&&(
+              <button className="basket-btn" onClick={()=>{handBasket(product)}}>add basket ➕</button>
+              )}
              {user?.roles==="Seller"&&(
               <>
-              <button className="delete-btn" onClick={()=>{handDelete(product)}}>Delete</button>
-              <button className="update-btn" onClick={()=>{handleOpenUpdate(product)}}>Update</button>
+              <button className="delete-btn" onClick={()=>{handDelete(product)}}>Delete 🗑️</button>
+              <button className="update-btn" onClick={()=>{handleOpenUpdate(product)}}>Update ✏️</button>
               </>
               )}
             </div>

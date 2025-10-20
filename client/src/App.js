@@ -13,9 +13,9 @@ function App() {
     <Router>
       <Routes>
         <Route path='/' element={<Layout/>}>
-          <Route path='/home' element={<ProductList/>}/>
+          <Route index element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
-          <Route path='/' element={<Login/>}/>
+          <Route path='/home' element={<ProductList/>}/>
           <Route path='/add-product-form' element={<AddProductForm/>}/>
           <Route path='/update-product-form' element={<UpdateProductForm/>}/>
           <Route path='/product-list' element={<ProductList/>}/>

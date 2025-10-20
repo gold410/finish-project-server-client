@@ -36,6 +36,7 @@ const UpdateProductForm = ({ product, onClose }) => {
     }
 
     const handleSubmit = (e) => {
+        console.log("form לפני שליחה:", form);
         console.log(product._id)
         e.preventDefault()
 
@@ -49,6 +50,7 @@ const UpdateProductForm = ({ product, onClose }) => {
         data.append("unitType", form.unitType);
         
         updateProduct({id:product._id,formData:data})
+
         setForm({
             productName: "",
             image: "",
