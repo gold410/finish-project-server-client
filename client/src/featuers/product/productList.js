@@ -1,13 +1,16 @@
-import { useGetProductsQuery ,useDeleteProductMutation } from "./productApiSlice";
+import { useGetProductsQuery ,useDeleteProductMutation} from "./productApiSlice";
 import "../../App.css";
 import AddProductForm from './addProductForm'
+import UpdateProductForm from "./updateProductForm";
 import { useState } from "react";
 import { useSelector } from "react-redux"
 
 const ProductList = () => {
   const { data: products = [], isLoading, isError, error } = useGetProductsQuery();
   const [deleteProduct]=useDeleteProductMutation()
-  const [showAdd,setShowAdd]=useState(false)//לשנות לFALSE אחרי הבדיקה
+  const [showAdd,setShowAdd]=useState(false)
+  const [showUpdate,setShowUpdate]=useState(false)
+  const [productToUpdate,setProductToUpdate]=useState(null)
   const [quantities,setQuantities]= useState({})
   const user=useSelector(state=>state.auth.user)
 
@@ -19,12 +22,19 @@ const ProductList = () => {
   const handDelete=(productItem)=>{
     deleteProduct(productItem._id)
   }
-  const handleAdd=()=>{
-    setShowAdd(true)
+  
+  const handleOpenAdd=()=>{setShowAdd(true)}
+  const handleCloseAdd=()=>{setShowAdd(false)}
+
+  const handleOpenUpdate=(product)=>{
+    setProductToUpdate(product)
+    setShowUpdate(true)
   }
-  const handleCloseForm=()=>{
-    setShowAdd(false)
+  const handleCloseUpdate=()=>{
+    setProductToUpdate(null)
+    setShowUpdate(false)
   }
+
   const handleChangeQuantities=(productItem,value,unitType)=>{
     let newValue=value
     if(unitType==="יח'"){
@@ -40,8 +50,9 @@ const ProductList = () => {
     console.log("user roles:", user?.roles)
   return (
     <div className="products-wrapper">
-      {user?.roles==="Seller"&&<button className="add-btn" onClick={()=>{handleAdd()}}>Add</button>}
-      {showAdd&&<AddProductForm onClose={handleCloseForm}/>}
+      {user?.roles==="Seller"&&<button className="add-btn" onClick={()=>{handleOpenAdd()}}>Add</button>}
+      {showAdd&&<AddProductForm onClose={handleCloseAdd}/>}
+      {showUpdate&&<UpdateProductForm product={productToUpdate} onClose={handleCloseUpdate}/>}
       <h1 className="products-title">Product List ({products.length})</h1>
       <div className="products-grid">
         {products.map((product) => {
@@ -68,7 +79,12 @@ const ProductList = () => {
               </div>
               </div>
               <p>מחיר: {(quentity*product.price).toFixed(2)} ₪({product.unitType === "יח'" ? "יח'" : "קג'"})</p>
-             {user?.roles==="Seller"&&(<button className="delete-btn" onClick={()=>{handDelete(product)}}>Delete</button>)}
+             {user?.roles==="Seller"&&(
+              <>
+              <button className="delete-btn" onClick={()=>{handDelete(product)}}>Delete</button>
+              <button className="update-btn" onClick={()=>{handleOpenUpdate(product)}}>Update</button>
+              </>
+              )}
             </div>
           </div>
           )

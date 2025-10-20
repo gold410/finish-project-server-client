@@ -3,10 +3,10 @@ const router=express.Router()
 const productController=require("../controllers/productController")
 const upload = require("../middleware/uploads")
 
-router.get("/getAll", productController.getAllProducts); // קודם כל הנתיב המפורש
-//router.get("/:id", productController.getProductById);    // ואז הנתיב עם מזהה
+router.get("/getAll", productController.getAllProducts);
+//router.get("/:id", productController.getProductById);
  router.post("/", upload.single("image"), productController.createNewProduct)
  router.delete("/:id",productController.deleteProduct)
- router.put("/",productController.updateProduct)
+ router.put("/:id",productController.updateProduct)
 
 module.exports=router
