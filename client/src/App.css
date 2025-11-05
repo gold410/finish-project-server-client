@@ -174,3 +174,100 @@ gap:14px 18px;
   border-radius: 4px;
   outline: none;
 }
+
+
+
+
+/* גוף הדף */
+.basket-container {
+  min-height: 100vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
+}
+
+/* כותרת */
+.basket-title,.no-basket {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.basket-grid {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  margin-left: auto; 
+  gap: 1rem;
+}
+
+/* כרטיס מוצר */
+.basket-card {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s;
+}
+
+.basket-card:hover {
+  transform: translateY(-5px);
+}
+
+/* תמונה */
+.basket-image {
+  width: 55%;
+  height: 55%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* שם, מחיר וכמות */
+.basket-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.basket-price {
+  color: #444;
+  margin-bottom: 0.3rem;
+}
+
+.basket-quantity {
+  color: #666;
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+}
+
+/* כפתורים */
+.basket-remove {
+  background-color: #3a6b35;
+  color: white;
+  padding: 0.4rem 1rem;
+  border: none;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+
+.basket-clear {
+  position: fixed; 
+  top: 4rem;     
+  left: 3rem;      
+  background-color: #3a6b35;
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor:pointer;
+  font-weight: 600;
+  z-index: 1000; /* כדי לוודא שהוא מעל שאר האלמנטים */
+}

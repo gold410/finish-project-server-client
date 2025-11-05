@@ -1,17 +1,22 @@
 import { useGetProductsQuery ,useDeleteProductMutation} from "./productApiSlice";
+import { addToBasket } from "../basket/basketSlice";
 import "../../App.css";
 import AddProductForm from './addProductForm'
 import UpdateProductForm from "./updateProductForm";
 import { useState } from "react";
-import { useSelector } from "react-redux"
+import { useSelector,useDispatch } from "react-redux"
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductList = () => {
+  const dispatch=useDispatch()
   const { data: products = [], isLoading, isError, error } = useGetProductsQuery();
   const [deleteProduct]=useDeleteProductMutation()
   const [showAdd,setShowAdd]=useState(false)
   const [showUpdate,setShowUpdate]=useState(false)
   const [productToUpdate,setProductToUpdate]=useState(null)
   const [quantities,setQuantities]= useState({})
+
   const user=useSelector(state=>state.auth.user)
 
   console.log("Current user:", user);
@@ -35,8 +40,10 @@ const ProductList = () => {
     setShowUpdate(false)
   }
 
-  const handBasket=()=>{
-    alert("המוצר נוסף בהצלחה")
+  const handBasket=(product)=>{
+    const quantity=quantities[product._id]||1
+    dispatch(addToBasket({...product, quantity }))
+    toast.success("המוצר נוסף לסל בהצלחה!");
   }
 
   const handleChangeQuantities=(productItem,value,unitType)=>{
@@ -72,8 +79,8 @@ const ProductList = () => {
               {/* <label htmlFor={`quentity-${product._id}`}>{product.unitType}</label> */}
               <div className="controler">
                 {product.unitType === "יח'" ? "'יח" : "'קג"}
-                <input id="quentity" name="quentity" type="number" min={1} step={product.unitType === "יח'" ? 1 : 0.5} value={quentity} onChange={(e)=>{
-                const val = Number(e.target.value);
+                <input id="quantity" name="quantity" type="number" min={1} step={product.unitType === "יח'" ? 1 : 0.5} value={quentity} onChange={(e)=>{
+                let val = Number(e.target.value);
                   if (product.unitType === "יח'") {
                     val = Math.max(1, Math.round(val)); // עיגול למספר שלם למוצרים ביחידות
                   } else {
