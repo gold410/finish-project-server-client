@@ -1,4 +1,4 @@
-import { removeFromBasket, clearBasket } from "./basketSlice";
+import { removeFromBasket, clearBasket ,loadBasket} from "./basketSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 const BasketList = () => {

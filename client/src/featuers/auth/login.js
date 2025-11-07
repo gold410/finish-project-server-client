@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { removeToken, setToken ,setUser} from "./authSlice"
 import {jwtDecode} from "jwt-decode";
+import { loadBasket } from "../basket/basketSlice"
 
 const Login=()=>{
     const nav=useNavigate()
@@ -28,6 +29,7 @@ const Login=()=>{
              const decoded = jwtDecode(data.token)
              //שומר את הטוקן המפוענח
             dispatch(setUser({ user: decoded }))
+             dispatch(loadBasket());
              nav('/home')
         }
     },[isSuccess])

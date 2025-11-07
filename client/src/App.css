@@ -175,9 +175,6 @@ gap:14px 18px;
   outline: none;
 }
 
-
-
-
 /* גוף הדף */
 .basket-container {
   min-height: 100vh;
@@ -185,7 +182,7 @@ gap:14px 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f9f9f9;
+  background-color:rgb(246, 237, 223);
   box-sizing: border-box;
 }
 
@@ -207,7 +204,7 @@ gap:14px 18px;
 
 /* כרטיס מוצר */
 .basket-card {
-  background-color: #fff;
+  background-color:#fff;
   padding: 1rem;
   border-radius: 0.75rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
