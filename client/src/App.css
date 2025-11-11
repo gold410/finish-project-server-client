@@ -254,6 +254,14 @@ gap:14px 18px;
   border-radius: 0.4rem;
   cursor: pointer;
 }
+.pay {
+  background-color: #3a6b35;
+  color: white;
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
 
 .basket-clear {
   position: fixed; 

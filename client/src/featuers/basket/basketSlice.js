@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-//בשביל לשמור את הסל קניות אחרי ריענון
+//שומר את הID כדי לבדוק האם המשתמש מחובר
 const getUserId=()=>{
 const currentUser=JSON.parse(localStorage.getItem("user"))
 return currentUser?currentUser._id:"guest"

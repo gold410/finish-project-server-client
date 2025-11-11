@@ -1,17 +1,23 @@
 import { useEffect, useState } from "react"
-import { useRegisterMutation } from "./authApiSlice"
+import { useRegisterMutation ,useGetUserQuery,useUpdateUserMutation} from "./authApiSlice"
 import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { setUser } from "./authSlice"
 
 const Register=()=>{
 
+  const nav=useNavigate()
+  const dispatch=useDispatch()
+  const { user } = useSelector((state) => state.auth);
     const [registerFunc,{isError,isLoading,isSuccess,data,error}]=useRegisterMutation()
+    const[updateUserFunc]=useUpdateUserMutation()
+
     const [registerForm, setRegisterForm]=useState({
-        name:"",
-        userName:"",
+        name:user.name||"",
+        userName:user.userName||"",
         password:"",
-        email:"",
+        email:user.email||"",
     })
-    const nav=useNavigate()
 
     useEffect(()=>{
      if(isSuccess){
@@ -22,19 +28,67 @@ const Register=()=>{
       setRegisterForm({...registerForm,[e.target.name]:e.target.value})
     }
 
-    const handleSubmit=(e)=>{
+    const handleSubmit=async(e)=>{
       e.preventDefault()
-      registerFunc(registerForm)
-      setRegisterForm({
-         name:"",
-        userName:"",
-        password:"",
-        email:"",
-      })
+
+    if (!registerForm.name || !registerForm.userName|| !registerForm.email) {
+    alert("יש למלא את כל השדות לפני שליחה");
+    return;
+  }
+  try{
+    //  const updateData = {
+    //   name: registerForm.name,
+    //   userName: registerForm.userName,
+    //   email: registerForm.email,
+    // };
+
+    // if (registerForm.password) {
+    //   updateData.password = registerForm.password; // רק אם משתמש הזין סיסמה
+    // }
+    if(user){
+
+ const payload = {
+  name: registerForm.name,
+  userName: registerForm.userName,
+  email: registerForm.email,
+  ...(registerForm.password ? { password: registerForm.password } : {})
+};
+
+const updateData = await updateUserFunc({ id: user._id, data: payload }).unwrap();
+      dispatch(setUser(updateData))
+      console.log("user._id:", user._id);
+      alert("המשתמש עודכן בהצלחה")
+      }else{
+      const data = await registerFunc(registerForm).unwrap();
+      setRegisterForm({ name: "", userName: "", password: "", email: "" });
+      alert("המשתמש נוסף בהצלחה");
+    } }catch(err){
+    console.error("שגיאה:", err);
+    alert(err?.data?.message || "שגיאה בשרת");
     }
+
+      // registerFunc(registerForm)
+      // setRegisterForm({
+      //   name:"",
+      //   userName:"",
+      //   password:"",
+      //   email:"",
+      // })
+    }
+    // const updateUser=async()=>{
+    //   if(!user)return
+    //   try{
+    //    const[updateData]=await updateUserFunc({id:user._id,...registerForm}).unwrap()
+    //   dispatch(setUser({user:updateData}))
+    //   alert("המשתמש עודכן בהצלחה")
+    //   }catch{
+    //     console.log(registerForm);
+    //   alert("שגיאה בעדכון המשתמש")
+    //   }
+    // }
     return<>
     <form onSubmit={handleSubmit}>
-      <h4>{isError&&JSON.stringify(error)}</h4>
+      {isError && (<h4 style={{ color: "red" }}>{JSON.stringify(error, null, 2)}</h4>)}
       <h4>{isLoading&&<h4>LOADING...</h4>}</h4>
       <h4 style={{color:"green"}}>{isSuccess&&<h4>המשתמש נוסף בהצלחה </h4>}</h4>
     <h2>Register Form</h2>
@@ -62,6 +116,9 @@ const Register=()=>{
     <div>
         <button>שלח</button>
     </div>
+     {/* <div>
+       {user&&<button type="button" onClick={updateUser}>עדכון פרטים</button>} 
+    </div> */}
    
     </form>
     </>

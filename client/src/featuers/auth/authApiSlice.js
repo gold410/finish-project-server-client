@@ -1,6 +1,5 @@
 import apiSlice from "../../app/apiSlice";
 
-
 const apiAuthSlice=apiSlice.injectEndpoints({
     endpoints:(build)=>({
         register:build.mutation({
@@ -16,7 +15,18 @@ const apiAuthSlice=apiSlice.injectEndpoints({
                 method:"POST",
                 body:loginUser,
             })
+        }),
+        updateUser: build.mutation({
+            query: ({ id, data }) => ({
+                url: `/api/user/${id}`,   
+                method: 'PUT',           
+                body: data             
+            }),
+            invalidatesTags: ['user']
+}),
+        getUser:build.query({
+            query:(id)=>`/api/user/${id}`,
         })
     })
 })
-export const {useRegisterMutation,useLoginMutation}=apiAuthSlice
+export const {useRegisterMutation,useLoginMutation,useGetUserQuery,useUpdateUserMutation}=apiAuthSlice

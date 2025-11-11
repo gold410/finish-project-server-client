@@ -36,19 +36,19 @@ const UpdateProductForm = ({ product, onClose }) => {
     }
 
     const handleSubmit = (e) => {
-        console.log("form לפני שליחה:", form);
+        console.log("form לפני שליחה:", form)
         console.log(product._id)
         e.preventDefault()
 
-        const data = new FormData();
-        data.append("productName", form.productName);
-        data.append("image", form.image); // קובץ
-        data.append("price", form.price);
-        data.append("description", form.description);
-        data.append("kategory", form.kategory);
-        data.append("inventory", form.inventory);
-        data.append("unitType", form.unitType);
-        
+        const data = new FormData()
+        data.append("productName", form.productName)
+        data.append("image", form.image) // קובץ
+        data.append("price", form.price)
+        data.append("description", form.description)
+        data.append("kategory", form.kategory)
+        data.append("inventory", form.inventory)
+        data.append("unitType", form.unitType)
+
         updateProduct({id:product._id,formData:data})
 
         setForm({

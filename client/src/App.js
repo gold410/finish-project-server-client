@@ -9,8 +9,19 @@ import Layout from './commponents/Layout'
 import BasketList from './featuers/basket/basketList';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Pay from './featuers/pay/pay';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react'
+import { loadBasket } from './featuers/basket/basketSlice';
+// import Update from './featuers/update/update';
 
 function App() {
+  //שומר את הסל קניות אחרי טעינה
+  const dispatch=useDispatch()
+  useEffect(()=>{
+  dispatch(loadBasket())
+  },[dispatch])
+
   return (
     <div className="App">
     <Router>
@@ -23,6 +34,8 @@ function App() {
           <Route path='/update-product-form' element={<UpdateProductForm/>}/>
           <Route path='/product-list' element={<ProductList/>}/>
           <Route path='/basket' element={<BasketList/>}/>
+          <Route path='/pay' element={<Pay/>}/>
+          {/* <Route path='/update' element={<Update/>}/> */}
         </Route>
       </Routes>
     </Router>
