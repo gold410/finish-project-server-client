@@ -187,7 +187,7 @@ gap:14px 18px;
 }
 
 /* כותרת */
-.basket-title,.no-basket {
+.basket-title,.no-basket,.pay-title {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 2rem;
@@ -275,4 +275,83 @@ gap:14px 18px;
   cursor:pointer;
   font-weight: 600;
   z-index: 1000; /* כדי לוודא שהוא מעל שאר האלמנטים */
+}
+.total-pay{
+   color: #666;
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+}
+
+.pay-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 200px);
+  justify-content: center; 
+  gap: 20px;
+  padding: 20px;
+  background-color: rgb(246, 237, 223);
+  min-height: 100vh;
+}
+
+/* כרטיס מוצר */
+.pay-card {
+  width: 200px;
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* לא מתפזר לגובה מלא */
+  background-color: rgb(246, 237, 223);
+  border-radius: 12px;
+  gap: 10px; /* רווח בין התמונה לטקסט */
+}
+
+
+.pay-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* תמונת מוצר */
+.pay-image {
+  width: 100%;
+  height: auto; 
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 5px;
+}
+
+/* שם מוצר */
+.pay-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* מחיר מוצר */
+.pay-price {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #3a6b35;
+}
+
+/* כמות מוצר */
+.pay-quantity {
+  font-size: 0.8rem;
+  color: #555555;
+}
+
+/* רספונסיביות */
+@media (max-width: 900px) {
+  .pay-grid {
+    grid-template-columns: repeat(2, 200px);
+  }
+}
+
+@media (max-width: 500px) {
+  .pay-grid {
+    grid-template-columns: 1fr;
+  }
 }

@@ -43,7 +43,7 @@ const ProductList = () => {
   const handBasket=(product)=>{
     const quantity=quantities[product._id]||1
     dispatch(addToBasket({...product, quantity }))
-    toast.success("המוצר נוסף לסל בהצלחה!");
+    toast.success("המוצר נוסף לסל בהצלחה!")
   }
 
   const handleChangeQuantities=(productItem,value,unitType)=>{
@@ -90,7 +90,7 @@ const ProductList = () => {
                 }}/>
               </div>
               </div>
-              <p className="product-price">מחיר: ₪{(quentity*product.price).toFixed(2)}</p>
+              <p className="product-price">מחיר: ₪{(quentity*product.price)}</p>
               {user?.roles==="User"&&(
               <button className="basket-btn" onClick={()=>{handBasket(product)}}>add basket ➕</button>
               )}

@@ -11,6 +11,8 @@ const BasketList = () => {
     return <h2 className="no-basket">הסל שלך ריק 🛒</h2>
   }
 
+  const totalPrice=items.reduce((sum,item)=>sum+item.price*item.quantity,0)
+
   return (
     <div className="basket-container">
       <h2 className="basket-title">🛍️ סל הקניות שלך</h2>
@@ -25,6 +27,11 @@ const BasketList = () => {
           </div>
         ))}
       </div>
+
+      <div className="total-pay">
+       <h3>סה״כ לתשלום: ₪{totalPrice}</h3>
+        </div>
+
       <button className="basket-clear" onClick={() => dispatch(clearBasket())} >נקה סל 🗑️</button>
       <button className="pay" onClick={()=>navigate('/pay')}>תשלום</button>
     </div>
