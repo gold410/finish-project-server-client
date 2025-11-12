@@ -1,17 +1,12 @@
 
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
 import { useDispatch ,useSelector} from "react-redux";
 import { removeToken } from "../featuers/auth/authSlice";
 
 const Navigation = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const dispatch=useDispatch()
   const user=useSelector(state=>state.auth.user)
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
   const exit=()=>{
     dispatch(removeToken())
   }
@@ -49,25 +44,4 @@ const linkStyle = {
   fontWeight: "500",
   cursor: "pointer"
 };
-
-const dropdownLinkStyle = {
-  display: "block",
-  color: "#3a6b35",
-  fontSize: "16px",
-  textDecoration: "none",
-  padding: "6px 12px",
-  margin: "2px 0",
-  transition: "all 0.3s ease",
-  fontWeight: "500",
-  cursor: "pointer"
-};
-
-// Hover effect
-const hoverStyle = {
-  color: "#ffffff",
-  backgroundColor: "#e3b448"
-};
-
-
-
 export default Navigation;

@@ -17,6 +17,7 @@ const ProductList = () => {
   const [productToUpdate,setProductToUpdate]=useState(null)
   const [quantities,setQuantities]= useState({})
   const [selectCategory, setSelectCategory] = useState("all");
+  const [search,setSearch]=useState("")
 
 
   const user=useSelector(state=>state.auth.user)
@@ -61,9 +62,6 @@ const ProductList = () => {
     }))
   }
     console.log("user roles:", user?.roles)
-
-
-
     
   return (
     <div className="products-wrapper">
@@ -78,11 +76,13 @@ const ProductList = () => {
   <button className="kategory" onClick={() => setSelectCategory("עלים")}>עלים 🥬</button>
 </div>
 
+<input className="search" id="search" name="search" type="text" placeholder="חפש מוצר 🔍" value={search} onChange={(e)=>setSearch(e.target.value)}></input>
 
       <h1 className="products-title">Product List</h1>
       <div className="products-grid">
         {products
-        .filter((p) => selectCategory === "all" || p.kategory === selectCategory)
+        .filter((p) => (selectCategory === "all" || p.kategory === selectCategory)&&
+        p.productName.toLowerCase().includes(search.toLowerCase()))
         .map((product) => {
           const quentity=quantities[product._id]||1
           return(

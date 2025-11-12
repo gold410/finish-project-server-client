@@ -373,3 +373,14 @@ gap:14px 18px;
   border-radius: 0.4rem;
   cursor: pointer; 
 }
+.search{
+ padding: 8px 12px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  display: block;
+  margin-right: 0;
+  margin-left: auto;
+  
+}
