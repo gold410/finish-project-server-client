@@ -16,6 +16,8 @@ const ProductList = () => {
   const [showUpdate,setShowUpdate]=useState(false)
   const [productToUpdate,setProductToUpdate]=useState(null)
   const [quantities,setQuantities]= useState({})
+  const [selectCategory, setSelectCategory] = useState("all");
+
 
   const user=useSelector(state=>state.auth.user)
 
@@ -59,14 +61,29 @@ const ProductList = () => {
     }))
   }
     console.log("user roles:", user?.roles)
+
+
+
+    
   return (
     <div className="products-wrapper">
       {user?.roles==="Seller"&&<button className="add-btn" onClick={()=>{handleOpenAdd()}}>Add ➕</button>}
       {showAdd&&<AddProductForm onClose={handleCloseAdd}/>}
       {showUpdate&&<UpdateProductForm product={productToUpdate} onClose={handleCloseUpdate}/>}
-      <h1 className="products-title">Product List ({products.length})</h1>
+
+<div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
+  <button className="kategory" onClick={() => setSelectCategory("all")}>הכול 🍇</button>
+  <button className="kategory" onClick={() => setSelectCategory("פרות")}>פירות 🍎</button>
+  <button className="kategory" onClick={() => setSelectCategory("ירקות")}>ירקות 🥕</button>
+  <button className="kategory" onClick={() => setSelectCategory("עלים")}>עלים 🥬</button>
+</div>
+
+
+      <h1 className="products-title">Product List</h1>
       <div className="products-grid">
-        {products.map((product) => {
+        {products
+        .filter((p) => selectCategory === "all" || p.kategory === selectCategory)
+        .map((product) => {
           const quentity=quantities[product._id]||1
           return(
           <div key={product._id} className="product-container">

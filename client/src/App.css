@@ -362,3 +362,14 @@ gap:14px 18px;
     grid-template-columns: 1fr;
   }
 }
+.kategory{
+  position: relative;
+  top:1rem;     
+  left: 0.5rem; 
+  background-color: rgb(246, 237, 223);
+  color: #3a6b35;
+  padding: 0.8rem 3rem;
+  border: none solid #3a6b35;
+  border-radius: 0.4rem;
+  cursor: pointer; 
+}

@@ -33,16 +33,16 @@ const usersSchema=new mongoose.Schema({
     },
     address:{
         city:{
-            type:string
+            type:String
         },
         street:{
-            type:string
+            type:String
         },
         buildingNumber:{
-            type:string
+            type:String
         },
         housNumber:{
-            type:string
+            type:String
         }
     }
 },{

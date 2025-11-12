@@ -25,21 +25,6 @@ const Navigation = () => {
       <NavLink to='/' style={linkStyle}>כניסה 🚪</NavLink>
       <NavLink to='/basket' style={linkStyle}>עגלת קניות 🛒</NavLink>
       <NavLink to='/sale' style={linkStyle}>מבצעים ✨</NavLink>
-
-      {/* כפתור הקטגוריה */}
-      <div style={{ position: "relative" }}>
-        <button onClick={toggleDropdown} style={linkStyle}>קטגוריה</button>
-
-        {/* תפריט נפתח */}
-        {isOpen && (
-          <div style={{ position: "absolute", top: "45px", right: "0", backgroundColor: "#f5f5f5", borderRadius: "5px", zIndex: 1 }}>
-            <NavLink to='/category/Fruits' style={dropdownLinkStyle}>פירות 🍎</NavLink>
-            <NavLink to='/category/Vegetables' style={dropdownLinkStyle}>ירקות 🥕</NavLink>
-            <NavLink to='/category/Leaves' style={dropdownLinkStyle}>עלים 🥬</NavLink>
-          </div>
-        )}
-      </div>
-
       <NavLink to='/update' style={linkStyle}>עדכון פרטים ✏️</NavLink>
       <NavLink to='/'onClick={(e)=>{e.preventDefault()
          exit()}} style={linkStyle} >יציאה👋🏼</NavLink>
@@ -50,7 +35,6 @@ const Navigation = () => {
   fontWeight: "500",
   marginRight: "auto", 
   padding: "0px 12px"}}>שלום {user ? user.name : "אורח/ת"}</h1>    
-  
 </div>
   );
 };
