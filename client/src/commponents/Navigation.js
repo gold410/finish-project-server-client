@@ -1,13 +1,20 @@
 
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch ,useSelector} from "react-redux";
+import { removeToken } from "../featuers/auth/authSlice";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch=useDispatch()
+  const user=useSelector(state=>state.auth.user)
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
+  const exit=()=>{
+    dispatch(removeToken())
+  }
 
   return (
     <div style={{ display: "flex", gap: "10px", zIndex:1000, position: "fixed",    width: "100%",          // קו לאורך כל המסך
@@ -34,16 +41,26 @@ const Navigation = () => {
       </div>
 
       <NavLink to='/update' style={linkStyle}>עדכון פרטים ✏️</NavLink>
-    </div>
+      <NavLink to='/'onClick={(e)=>{e.preventDefault()
+         exit()}} style={linkStyle} >יציאה👋🏼</NavLink>
+         
+<h1 style={{
+  color: "#3a6b35",
+  fontSize: "16px",
+  fontWeight: "500",
+  marginRight: "auto", 
+  padding: "0px 12px"}}>שלום {user ? user.name : "אורח/ת"}</h1>    
+  
+</div>
   );
 };
 
 const linkStyle = {
-  color: "#3a6b35",        // צבע הטקסט העיקרי
+  color: "#3a6b35",      
   fontSize: "16px",
   textDecoration: "none",
   padding: "8px 12px",
-  borderRadius: "4px",     // פינות מאוד עדינות
+  borderRadius: "4px",     
   transition: "all 0.3s ease",
   fontWeight: "500",
   cursor: "pointer"
@@ -64,7 +81,7 @@ const dropdownLinkStyle = {
 // Hover effect
 const hoverStyle = {
   color: "#ffffff",
-  backgroundColor: "#e3b448"  // צבע highlight בהארה
+  backgroundColor: "#e3b448"
 };
 
 

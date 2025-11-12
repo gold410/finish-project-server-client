@@ -30,6 +30,20 @@ const usersSchema=new mongoose.Schema({
     active:{
         type:Boolean,
         default:true
+    },
+    address:{
+        city:{
+            type:string
+        },
+        street:{
+            type:string
+        },
+        buildingNumber:{
+            type:string
+        },
+        housNumber:{
+            type:string
+        }
     }
 },{
     timestamps: true

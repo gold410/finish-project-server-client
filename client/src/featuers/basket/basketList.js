@@ -21,6 +21,7 @@ const BasketList = () => {
           <div key={item._id} className="basket-card">
             <img className="basket-image" src={`http://127.0.0.1:9636${item.image}`} alt={item.productName} />
             <h4 className="basket-name">{item.productName}</h4>
+            <h5 className="basket-description">{item.description}</h5>
             <h3 className="basket-price">₪{item.price*item.quantity}</h3>
             <p className="basket-quantity">כמות: {item.quantity}</p>
             <button className="basket-remove" onClick={() => dispatch(removeFromBasket(item._id))}>הסר ❌</button>
