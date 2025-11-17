@@ -3,12 +3,13 @@ import { addToBasket } from "../basket/basketSlice";
 import "../../App.css";
 import AddProductForm from './addProductForm'
 import UpdateProductForm from "./updateProductForm";
-import { useState } from "react";
+import { useState,useEffect} from "react";
 import { useSelector,useDispatch } from "react-redux"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ProductList = () => {
+
   const dispatch=useDispatch()
   const { data: products = [], isLoading, isError, error } = useGetProductsQuery();
   const [deleteProduct]=useDeleteProductMutation()
@@ -18,9 +19,17 @@ const ProductList = () => {
   const [quantities,setQuantities]= useState({})
   const [selectCategory, setSelectCategory] = useState("all");
   const [search,setSearch]=useState("")
-
+  const [price,setPrice] = useState("")
+  const [oldPrice, setOldPrice] = useState({});
 
   const user=useSelector(state=>state.auth.user)
+
+useEffect(() => {
+  const savedOldPrices = localStorage.getItem("oldPrice");
+  if (savedOldPrices) {
+    setOldPrice(JSON.parse(savedOldPrices));
+  }
+}, []);
 
   console.log("Current user:", user);
 
@@ -49,6 +58,16 @@ const ProductList = () => {
     toast.success("המוצר נוסף לסל בהצלחה!")
   }
 
+  const handleSale=(product)=>{
+   setOldPrice(prev => {
+   const newPrice={ ...prev,[product._id]: product.price}
+   localStorage.setItem("oldPrice",JSON.stringify(newPrice))
+   return newPrice
+  });
+  setProductToUpdate(product);
+  setShowUpdate(true);
+  }
+
   const handleChangeQuantities=(productItem,value,unitType)=>{
     let newValue=value
     if(unitType==="יח'"){
@@ -65,7 +84,7 @@ const ProductList = () => {
     
   return (
     <div className="products-wrapper">
-      {user?.roles==="Seller"&&<button className="add-btn" onClick={()=>{handleOpenAdd()}}>Add ➕</button>}
+      {user?.roles==="Seller"&&<button className="add-btn" onClick={()=>{handleOpenAdd()}}>Add product ➕</button>}
       {showAdd&&<AddProductForm onClose={handleCloseAdd}/>}
       {showUpdate&&<UpdateProductForm product={productToUpdate} onClose={handleCloseUpdate}/>}
 
@@ -107,7 +126,23 @@ const ProductList = () => {
                 }}/>
               </div>
               </div>
-              <p className="product-price">מחיר: ₪{(quentity*product.price)}</p>
+              {/* הצגת מחיר ישן וחדש -סייל  */}
+              <div className="product-price">
+                {oldPrice[product._id] && oldPrice[product._id] > product.price && (
+                  <span style={{
+                    color: "red",
+                    textDecoration: "line-through",
+                    marginRight: "8px",
+                    fontSize: "16px"
+                  }}>
+                    ₪{oldPrice[product._id]}
+                  </span>
+                )}
+                <span style={{ fontWeight: "bold", fontSize: "18px" }}>
+                  ₪{product.price}
+                </span>
+              </div>
+
               {user?.roles==="User"&&(
               <button className="basket-btn" onClick={()=>{handBasket(product)}}>add basket ➕</button>
               )}
@@ -115,6 +150,7 @@ const ProductList = () => {
               <>
               <button className="delete-btn" onClick={()=>{handDelete(product)}}>Delete 🗑️</button>
               <button className="update-btn" onClick={()=>{handleOpenUpdate(product)}}>Update ✏️</button>
+              <button className="sale-btn" onClick={()=>{handleSale(product)}}>Sale ✨</button>
               </>
               )}
             </div>
@@ -126,4 +162,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default ProductList

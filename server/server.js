@@ -2,11 +2,9 @@ require ("dotenv").config()
 const express=require("express")
 const cors=require("cors")
 const mongoose=require('mongoose')
-//const multer=require('multer')
 const corsOptions = require("./config/corsOptions")
 const connectDB=require("./config/dbConn")
 const upload = require('./middleware/uploads');
-
 
 connectDB()
 const app=express()
@@ -16,7 +14,6 @@ app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.static("public"))
 
-//להחליף להפניות לחנות
 app.use("/api/auth",require('./routs/autherRouts'))
 app.use("/api/products",require("./routs/productRouts"))
 app.use('/api/user',require('./routs/userRouts'))

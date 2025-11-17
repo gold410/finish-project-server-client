@@ -40,21 +40,29 @@ const createNewProduct=async(req,res)=>{
 }
 
 const updateProduct=async(req,res)=>{
-    const {_id,productName,price,image,description,kategory,inventory,unitType}= req.body
-    if(!_id||!productName||!price||!image){
-        return res.status(400).json({message:'_id,productName price,image are required'})
+    const {id} = req.params
+    const {productName,price,description,kategory,inventory,unitType}= req.body
+    if(!id||!productName||!price){
+        return res.status(400).json({message:'id,productName price, are required'})
     }
-    const product=await Product.findById(_id)
+    const product=await Product.findById(id)
     if(!product){
         return res.status(400).json({message:'product not found'})   
     }
-    product.productName=productName
-    product.price=price
-    product.image=image
-    product.description=description
-    product.inventory=inventory
-    product.kategory=kategory
-    product.unitType=unitType
+
+    product.productName = productName ?? product.productName;
+    product.price = price ?? product.price;
+    product.description = description ?? product.description;
+    product.kategory = kategory ?? product.kategory;
+    product.inventory = inventory ?? product.inventory;
+   if (unitType) {
+  product.unitType = unitType;
+}
+ 
+    if (req.file) {
+    product.image = `/uploads/${req.file.filename}`;
+}
+
     const updatedProduct=await product.save()
     res.json(`${updatedProduct.productName} updated`)
 }
@@ -69,10 +77,5 @@ const deleteProduct=("/:id",async(req,res)=>{
     const result =await product.deleteOne()
     res.json(`${name} deleted`)
 })
-
-
-
-
-
 
 module.exports={getAllProducts,createNewProduct,getProductById,updateProduct,deleteProduct}

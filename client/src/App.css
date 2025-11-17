@@ -65,25 +65,24 @@ body{
     color: #3a6b35;
 }
 
-.delete-btn ,.update-btn ,.basket-btn{
+.delete-btn ,.update-btn ,.basket-btn,.sale-btn{
     background-color: #3a6b35;
     color: #cbd18f;
     border: none;
     padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.2s;
-    margin-right: 8px;
+    margin: 4px;
 }
 .add-btn{
     background-color: #3a6b35;
     color: #cbd18f;
     border: none;
-    padding: 8px 12px;
+    padding: 15px 10px;
+    margin: 10px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.2s;
-}
+  }
 
 .delete-btn:hover {
     background-color: #be123c;
