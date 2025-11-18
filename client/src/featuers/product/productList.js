@@ -19,7 +19,6 @@ const ProductList = () => {
   const [quantities,setQuantities]= useState({})
   const [selectCategory, setSelectCategory] = useState("all");
   const [search,setSearch]=useState("")
-  const [price,setPrice] = useState("")
   const [oldPrice, setOldPrice] = useState({});
 
   const user=useSelector(state=>state.auth.user)
@@ -106,11 +105,15 @@ useEffect(() => {
           const quentity=quantities[product._id]||1
           return(
           <div key={product._id} className="product-container">
+            {/* תמונה */}
               <img className="product-image" src={`http://127.0.0.1:9636${product.image}`} alt={product.productName} />
             <div className="product-info">
+              {/* שם מוצר */}
               <h2 className="product-name">{product.productName}</h2>
               {/* <p className="product-unit">{product.unitType}</p> */}
+              {/* תאור */}
               <p className="product-description">{product.description}</p>
+              {/* כמות */}
               <div className="field">
               {/* <label htmlFor={`quentity-${product._id}`}>{product.unitType}</label> */}
               <div className="controler">
@@ -126,6 +129,7 @@ useEffect(() => {
                 }}/>
               </div>
               </div>
+              {/* מחיר */}
               {/* הצגת מחיר ישן וחדש -סייל  */}
               <div className="product-price">
                 {oldPrice[product._id] && oldPrice[product._id] > product.price && (
@@ -141,6 +145,10 @@ useEffect(() => {
                 <span style={{ fontWeight: "bold", fontSize: "18px" }}>
                   ₪{product.price}
                 </span>
+              </div>
+              {/* מלאי */}
+              <div className="product-inventory">
+               <h2>  ({product.inventory}) מלאי</h2>
               </div>
 
               {user?.roles==="User"&&(

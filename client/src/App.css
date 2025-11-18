@@ -65,6 +65,10 @@ body{
     color: #3a6b35;
 }
 
+.product-inventory{
+    color: #e3b448;
+}
+
 .delete-btn ,.update-btn ,.basket-btn,.sale-btn{
     background-color: #3a6b35;
     color: #cbd18f;
@@ -137,7 +141,7 @@ font-weight:600;
 
 
 .btn.save{
-background:#66dcb5;
+background:#3a6b35;
 color:#fff;
 }
 
@@ -382,4 +386,87 @@ gap:14px 18px;
   margin-right: 0;
   margin-left: auto;
   
+}
+
+/* עטיפה כללית */
+form {
+  width: 350px;
+  margin: 70px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.12);
+  text-align: right;
+  direction: rtl;
+  font-family: 'Alef', sans-serif;
+}
+
+/* הכותרת */
+form h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #3a6b35;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* תיבת קלט */
+form input {
+  width: 100%;
+  padding: 12px;
+  border: 1.5px solid #d7d7d7;
+  border-radius: 10px;
+  margin-top: 5px;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+/* כפתור */
+form button {
+  width: 100%;
+  background: #3a6b35;
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  margin-top: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.25s;
+  font-weight: 600;
+}
+
+/* אפקט העלאת צבע */
+form button:hover {
+  background: #4a8144;
+}
+
+/* עיטוף השדות */
+form div {
+  margin-bottom: 18px;
+}
+
+/* הלייבלים */
+form label {
+  font-weight: 600;
+  color: #e3b448;
+  font-size: 15px;
+}
+/* עיצוב שדה החיפוש */
+.search {
+  width: 300px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: 2px solid #cfcfcf;
+  outline: none;
+  transition: 0.25s ease;
+  background-color: #ffffff;
+  direction: rtl;
+  cursor: text;
+  background-repeat: no-repeat;
+}
+
+/* אפקט פוקוס */
+.search:focus {
+  border-color: #e3b448;
 }
