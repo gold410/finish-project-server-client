@@ -7,6 +7,8 @@ import { useState,useEffect} from "react";
 import { useSelector,useDispatch } from "react-redux"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ProductGrid from "./productGrid";
+
 
 const ProductList = () => {
 
@@ -97,75 +99,22 @@ useEffect(() => {
 <input className="search" id="search" name="search" type="text" placeholder="חפש מוצר 🔍" value={search} onChange={(e)=>setSearch(e.target.value)}></input>
 
       <h1 className="products-title">Product List</h1>
-      <div className="products-grid">
-        {products
-        .filter((p) => (selectCategory === "all" || p.kategory === selectCategory)&&
-        p.productName.toLowerCase().includes(search.toLowerCase()))
-        .map((product) => {
-          const quentity=quantities[product._id]||1
-          return(
-          <div key={product._id} className="product-container">
-            {/* תמונה */}
-              <img className="product-image" src={`http://127.0.0.1:9636${product.image}`} alt={product.productName} />
-            <div className="product-info">
-              {/* שם מוצר */}
-              <h2 className="product-name">{product.productName}</h2>
-              {/* <p className="product-unit">{product.unitType}</p> */}
-              {/* תאור */}
-              <p className="product-description">{product.description}</p>
-              {/* כמות */}
-              <div className="field">
-              {/* <label htmlFor={`quentity-${product._id}`}>{product.unitType}</label> */}
-              <div className="controler">
-                {product.unitType === "יח'" ? "'יח" : "'קג"}
-                <input id="quantity" name="quantity" type="number" min={1} step={product.unitType === "יח'" ? 1 : 0.5} value={quentity} onChange={(e)=>{
-                let val = Number(e.target.value);
-                  if (product.unitType === "יח'") {
-                    val = Math.max(1, Math.round(val)); // עיגול למספר שלם למוצרים ביחידות
-                  } else {
-                    val = Math.max(0.5, val); // מינימום 0.5 לקילו
-                  }
-                  handleChangeQuantities(product._id,val,product.unitType)
-                }}/>
-              </div>
-              </div>
-              {/* מחיר */}
-              {/* הצגת מחיר ישן וחדש -סייל  */}
-              <div className="product-price">
-                {oldPrice[product._id] && oldPrice[product._id] > product.price && (
-                  <span style={{
-                    color: "red",
-                    textDecoration: "line-through",
-                    marginRight: "8px",
-                    fontSize: "16px"
-                  }}>
-                    ₪{oldPrice[product._id]}
-                  </span>
-                )}
-                <span style={{ fontWeight: "bold", fontSize: "18px" }}>
-                  ₪{product.price}
-                </span>
-              </div>
-              {/* מלאי */}
-              <div className="product-inventory">
-               <h2>  ({product.inventory}) מלאי</h2>
-              </div>
+<ProductGrid
+  products={products.filter(
+    (p) =>
+      (selectCategory === "all" || p.kategory === selectCategory) &&
+      p.productName.toLowerCase().includes(search.toLowerCase())
+  )}
+  user={user}
+  quantities={quantities}
+  handleChangeQuantities={handleChangeQuantities}
+  handBasket={handBasket}
+  handDelete={handDelete}
+  handleOpenUpdate={handleOpenUpdate}
+  handleSale={handleSale}
+  oldPrice={oldPrice}
+/>
 
-              {user?.roles==="User"&&(
-              <button className="basket-btn" onClick={()=>{handBasket(product)}}>add basket ➕</button>
-              )}
-             {user?.roles==="Seller"&&(
-              <>
-              <button className="delete-btn" onClick={()=>{handDelete(product)}}>Delete 🗑️</button>
-              <button className="update-btn" onClick={()=>{handleOpenUpdate(product)}}>Update ✏️</button>
-              <button className="sale-btn" onClick={()=>{handleSale(product)}}>Sale ✨</button>
-              </>
-              )}
-            </div>
-          </div>
-          )
-        })}
-      </div>
     </div>
   );
 };

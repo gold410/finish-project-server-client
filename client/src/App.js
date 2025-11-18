@@ -13,6 +13,7 @@ import Pay from './featuers/pay/pay';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react'
 import { loadBasket } from './featuers/basket/basketSlice';
+import Sale from './featuers/sale/sale';
 // import Update from './featuers/update/update';
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           <Route path='/product-list' element={<ProductList/>}/>
           <Route path='/basket' element={<BasketList/>}/>
           <Route path='/pay' element={<Pay/>}/>
+          <Route path='/sale' element={<Sale/>}/>
           {/* <Route path='/update' element={<Update/>}/> */}
         </Route>
       </Routes>

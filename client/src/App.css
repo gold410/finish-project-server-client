@@ -169,6 +169,10 @@ gap:14px 18px;
   object-fit: cover; /* חותך וממלא את הקופסה בצורה יפה */
   border-radius: 8px; /* אופציונלי – פינות מעוגלות */
 }
+.sale-image{
+  width: 60px;
+  height: 60px;
+}
 .controler input[type="number"] {
   width: 40px;        /* רוחב מתאים */
   padding: 4px 8px;   /* ריווח פנימי קטן */
