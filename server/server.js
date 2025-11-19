@@ -22,6 +22,7 @@ app.use("/api/order",require('./routs/orderRouts'))
 app.post('/api/uploads',upload.single('image'),(req,res)=>{
     res.json(req.file)
 })
+app.use("/api/receipt", require("./routs/receiptRoutes")); // ✅ חשוב שהנתיב נכון
 
 mongoose.connection.once('open',()=>{
     console.log("connect to server success")
