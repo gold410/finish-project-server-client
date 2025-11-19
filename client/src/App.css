@@ -166,12 +166,12 @@ gap:14px 18px;
 .add-product-form .field:nth-last-child(2){grid-column:1 / -1}
 .actions{grid-column:1 / -1}
 }
-.product-image {
-  width: 200px;      /* רוחב קבוע */
-  height: 200px;     /* גובה קבוע */
-  object-fit: cover; /* חותך וממלא את הקופסה בצורה יפה */
-  border-radius: 8px; /* אופציונלי – פינות מעוגלות */
-}
+/* .product-image- {
+  width: 200px;         
+  height: 200px;    
+  object-fit: cover; 
+  border-radius: 8px; 
+} */
 .sale-image{
   width: 60px;
   height: 60px;
@@ -197,7 +197,7 @@ gap:14px 18px;
 }
 
 /* כותרת */
-.basket-title,.no-basket,.pay-title {
+.basket-title,.no-basket,.pay-title{
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 2rem;
@@ -383,17 +383,6 @@ gap:14px 18px;
   border-radius: 0.4rem;
   cursor: pointer; 
 }
-.search{
- padding: 8px 12px;
-  border: 1.5px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
-  outline: none;
-  display: block;
-  margin-right: 0;
-  margin-left: auto;
-  
-}
 
 /* עטיפה כללית */
 form {
@@ -471,6 +460,11 @@ form label {
   direction: rtl;
   cursor: text;
   background-repeat: no-repeat;
+ padding: 8px 12px;
+  display: block;
+  margin-right: 0;
+  margin-left: auto;
+  
 }
 
 /* אפקט פוקוס */

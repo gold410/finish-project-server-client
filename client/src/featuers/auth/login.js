@@ -64,6 +64,7 @@ const Login=()=>{
                 </h3>
             )}
         <div>
+            {/* <p className="forgetPassword" onClick={()=>{}}>שכחתי סיסמא</p> */}
             <button>שלח</button>
         </div>
     </form>

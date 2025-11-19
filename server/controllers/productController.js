@@ -21,7 +21,7 @@ const getProductById=async(req,res)=>{
 }
 
 const createNewProduct=async(req,res)=>{
-    const {productName,price,description,kategory,inventory,unitType}= req.body
+    const {productName,price,description,kategory,inventory,unitType,originalPrice }= req.body
     if (!req.file) {
         return res.status(400).json({ message: 'Image file is required' })
     }
@@ -29,7 +29,7 @@ const createNewProduct=async(req,res)=>{
     if(!productName||!price||!image){
         return res.status(400).json({message:'productName,price,image are required'})
     }
-    const newProduct=await Product.create({productName,price,image,description,kategory,inventory,unitType})
+    const newProduct=await Product.create({productName,price,image,description,kategory,inventory,unitType,originalPrice })
     if(newProduct){
         return res.status(201).json({message: "new product created"})
     }
@@ -41,8 +41,8 @@ const createNewProduct=async(req,res)=>{
 
 const updateProduct=async(req,res)=>{
     const {id} = req.params
-    const {productName,price,description,kategory,inventory,unitType}= req.body
-    if(!id||!productName||!price){
+    const {productName,price,description,kategory,inventory,unitType,originalPrice }= req.body
+    if(!id){
         return res.status(400).json({message:'id,productName price, are required'})
     }
     const product=await Product.findById(id)
@@ -50,13 +50,17 @@ const updateProduct=async(req,res)=>{
         return res.status(400).json({message:'product not found'})   
     }
 
-    product.productName = productName ?? product.productName;
-    product.price = price ?? product.price;
-    product.description = description ?? product.description;
-    product.kategory = kategory ?? product.kategory;
-    product.inventory = inventory ?? product.inventory;
+    if (productName !== undefined) product.productName = productName;
+    if (price !== undefined) product.price = price;
+    if (description !== undefined) product.description = description;
+    if (kategory !== undefined) product.kategory = kategory;
+    if (inventory !== undefined) product.inventory = inventory;
+    if (unitType !== undefined) product.unitType = unitType;
    if (unitType) {
   product.unitType = unitType;
+}
+if (originalPrice !== undefined) {
+    product.originalPrice = originalPrice;
 }
  
     if (req.file) {

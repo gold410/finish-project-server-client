@@ -1,10 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 //שומר את הID כדי לבדוק האם המשתמש מחובר
-const getUserId=()=>{
-const currentUser=JSON.parse(localStorage.getItem("user"))
-return currentUser?currentUser._id:"guest"
+const getUserId = () => {
+  const userStr = localStorage.getItem("user");
+  let user = null;
+  if (userStr && userStr !== "undefined") {
+    try {
+      user = JSON.parse(userStr);
+    } catch (err) {
+      console.warn("Failed to parse user from localStorage", err);
+      user = null;
+    }
+  }
+  return user ? user._id : "guest";
 }
+
 const initialState = {
   items: []
 }

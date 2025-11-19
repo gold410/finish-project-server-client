@@ -76,7 +76,8 @@ console.log("Sending update:", { price: prevPrice });
 
 await updateProduct({
   id: product._id,
-  formData: { price: prevPrice } // רק price
+  formData: { price: prevPrice },
+  originalPrice: null // רק price
 }).unwrap();
 
 
@@ -127,8 +128,8 @@ await updateProduct({
     }))
   }
     
-    return(<div className="products-title">
-    <h1>🔥 מוצרים במבצע 🔥</h1>
+    return(<div className="products-wrapper">
+    <h1 className="products-title">🔥 מוצרים במבצע 🔥</h1>
     <ProductGrid
     products={saleProducts}
     user={user}
@@ -140,6 +141,7 @@ await updateProduct({
   handleSale={handleSale}
   oldPrice={oldPrice}
     />
-    </div>)
+    </div>
+    )
 }
 export default Sale

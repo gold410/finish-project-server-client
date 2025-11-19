@@ -1,68 +1,13 @@
-// import { useEffect, useState } from "react"
-
-// const UpdateUser=()=>{
-//     const[updateForm,setUpdateForm]=useState({
-//         name:"",
-//         userName:"",
-//         password:"",
-//         email:"",
-//     })
-//     useEffect(()=>{
-//     setUpdateForm({
-//         name:"",
-//         userName:"",
-//         password:"",
-//         email:"",
-//     })
-//     })
-//      const handleChange=(e)=>{
-//      setUpdateForm({...updateForm,[e.target.name]:e.target.value})
-//     }
-
-// return<>
-// <form onSubmit={handleSubmit}>
-//       {/* <h4>{isError&&JSON.stringify(error)}</h4>
-//       <h4>{isLoading&&<h4>LOADING...</h4>}</h4>
-//       <h4 style={{color:"green"}}>{isSuccess&&<h4>המשתמש השתנה בהצלחה </h4>}</h4> */}
-//     <h2>Update Form</h2>
-
-//     <div>
-//         <label>שם</label>
-//         <div><input id="name" name="name" type="text" value={updateForm.name} onChange={handleChange}/></div>
-//     </div>
-
-//     <div>
-//         <label>שם משתמש</label>
-//         <div><input id="userName" name="userName" type="text" value={updateForm.userName} onChange={handleChange}/></div>
-//     </div>
-
-//     <div>
-//         <label>סיסמא</label>
-//         <div><input id="password" name="password" type="password" value={updateForm.password} onChange={handleChange}/></div>
-//     </div>
-
-//     <div>
-//         <label>אימייל</label>
-//         <div><input id="email" name="email" type="email" value={updateForm.email} onChange={handleChange}/></div>
-//     </div>
-    
-//     <div>
-//         <button>שלח</button>
-//     </div>
-   
-//     </form>
-
-// </>
-// }
-// export default UpdateUser
-
 import { useEffect, useState } from "react";
-import { useUpdateUserMutation } from "./authApiSlice";
+import { useUpdateUserMutation} from "./authApiSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "./authSlice";
+import { useNavigate } from "react-router-dom";
+import {removeToken} from './authSlice'
 
 const UpdateUser = () => {
   const dispatch = useDispatch();
+  const navigate=useNavigate()
   const { user } = useSelector((state) => state.auth);
 
   const [updateUserFunc, { isLoading }] = useUpdateUserMutation();
@@ -107,19 +52,21 @@ const UpdateUser = () => {
 
       const updatedData = await updateUserFunc({
         id: user._id,
-        data: payload, // <-- כאן השינוי
+        data: payload,
       }).unwrap();
 
-      dispatch(setUser(updatedData));
-      alert("המשתמש עודכן בהצלחה!");
-      setForm((prev) => ({ ...prev, password: "" }));
+      dispatch(setUser(updatedData))
+localStorage.setItem("user", JSON.stringify(updatedData)); // עדכון localStorage
+      alert("המשתמש עודכן בהצלחה!")
+setForm((prev) => ({ ...prev, password: "" }))
+navigate("/home"); 
     } catch (err) {
       console.error("Update error:", err);
-      alert(err?.data?.message || "שגיאה בעדכון המשתמש");
+      alert(err?.data?.message || "שגיאה בעדכון המשתמש")
     }
-  };
+  }
 
-  if (!user) return <h3>אין משתמש מחובר</h3>;
+  if (!user) return <h3>אין משתמש מחובר</h3>
 
   return (
     <form onSubmit={handleSubmit}>
