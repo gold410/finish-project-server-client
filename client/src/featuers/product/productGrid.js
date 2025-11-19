@@ -11,6 +11,7 @@ const ProductGrid = ({
   oldPrice = {},
 }) => {
   return (
+         <div className="products-wrapper">
          <div className="products-grid">
         {products
         .map((product) => {
@@ -83,6 +84,7 @@ const ProductGrid = ({
           </div>
           )
         })}
+      </div>
       </div>
   )
 }

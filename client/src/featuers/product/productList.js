@@ -134,7 +134,7 @@ useEffect(() => {
 
 <input className="search" id="search" name="search" type="text" placeholder="חפש מוצר 🔍" value={search} onChange={(e)=>setSearch(e.target.value)}></input>
 
-      <h1 className="products-title">Product List</h1>
+      <h1 className="products-title">🍍 טרי לי 🍍</h1>
 <ProductGrid
   products={products.filter(
     (p) =>

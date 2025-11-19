@@ -18,6 +18,13 @@ const createNewUser=async(req,res)=>{
     if(chekUnique.length>0){
         return res.status(409).json({message:'userName is not unique'})
     }
+    if(!email.includs('@')||!email.includs('.')){
+        return res.status(409).json({message:"error emeil"})
+    }
+   const strongPassword = /^(?=.*[A-Za-z])(?=.*[^A-Za-z0-9]).{6,}$/;
+   if(!strongPassword.test(password)){
+        return res.status(400).json({message:"password is not strong"})
+     }
     const hashPassword=await bcrypt.hash(password,10)
 
     const newUser=await User.create({userName,password:hashPassword,name,email,phone})
@@ -29,7 +36,6 @@ const createNewUser=async(req,res)=>{
         return res.status(201).json({message: `new user ${userName} created`})
     }
    
-
 }
 const getUserById=async(req,res)=>{
     const{id}=req.params
@@ -42,38 +48,6 @@ const getUserById=async(req,res)=>{
         return res.status(201).json(user) 
     }
 }
-
-// const updateUser=async(req,res)=>{
-//     const {_id,userName,password,name,email,phone}= req.body
-//     if(!userName||!_id||!name){
-//         return res.status(400).json({message:'userName and name are required'})
-//     }
-//       let objectId;
-//     try {
-//         objectId = mongoose.Types.ObjectId(_id);
-//     } catch (err) {
-//         return res.status(400).json({ message: 'Invalid user _id' });
-//     }
-//     const chekUnique=await User.find({userName,_id:{$ne:objectId}})
-//     if(chekUnique.length>0){
-//         return res.status(409).json({message:'userName is not unique'})
-//     }
-//     const user=await User.findById(_id)
-//     if(!user){
-//         return res.status(400).json({message:'user not found'})   
-//     }
-//     user.userName=userName
-//     user.name=name
-//     user.email=email
-//     user.phone=phone
-//     if(password){
-//         user.password=await bcrypt.hash(password,10)
-//     }
-//     const updatedUser=await user.save()
-//     res.json(`${updatedUser.name} updated`)
-    
-// }
-
 
 const updateUser = async (req, res) => {
     const { userName, password, name, email, phone } = req.body

@@ -30,7 +30,18 @@ const Register=()=>{
 
     const handleSubmit=async(e)=>{
       e.preventDefault()
+       const strongPassword = /^(?=.*[A-Za-z])(?=.*[^A-Za-z0-9]).{6,}$/;
+    if (!strongPassword.test(form.password)) {
+     alert("הסיסמה חייבת לכלול לפחות אות באנגלית, לפחות תו מיוחד ולפחות 6 תווים");
+      return;
+    }
+    // כאן תשלחי את הנתונים לשרת
+    console.log("Password is strong! Submit the form.");
 
+    if(!form.email.includes('@')||!form.email.includes('.')){
+      alert("איימיל חייב לכלול @ ו . ")
+      return
+    }
     if (!form.name || !form.userName|| !form.email||!form.password) {
     alert("יש למלא את כל השדות לפני שליחה");
     return;
