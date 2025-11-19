@@ -8,7 +8,7 @@ const AuthPage = () => {
   return (
     <div className="auth-page">
       {showLogin ? <Login /> : <Register />}
-      <div style={{ marginTop: "20px", textAlign: "center" }}>
+      <div style={{textAlign: "center" }}>
         {showLogin ? (
           <p>
             אין לך חשבון?{" "}

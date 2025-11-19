@@ -3,7 +3,6 @@ import { useUpdateUserMutation} from "./authApiSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "./authSlice";
 import { useNavigate } from "react-router-dom";
-import {removeToken} from './authSlice'
 
 const UpdateUser = () => {
   const dispatch = useDispatch();
