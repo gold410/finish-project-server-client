@@ -7,8 +7,10 @@ const Pay=()=>{
   const items = useSelector((state) => state.basket.items)
   const dispatch=useDispatch()
   const [thankYou, setThankYou]=useState(false);
+  // const [inventory, setInventory]= useState("")
 
-  const handlePay=()=>{
+   const handlePay=()=>{
+
   dispatch(clearBasket())
   toast.success("התשלום הצליח!")
   setThankYou(true);

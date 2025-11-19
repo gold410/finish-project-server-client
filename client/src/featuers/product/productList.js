@@ -8,6 +8,7 @@ import { useSelector,useDispatch } from "react-redux"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ProductGrid from "./productGrid";
+import { useUpdateProductMutation } from "./productApiSlice";
 
 
 const ProductList = () => {
@@ -22,6 +23,8 @@ const ProductList = () => {
   const [selectCategory, setSelectCategory] = useState("all");
   const [search,setSearch]=useState("")
   const [oldPrice, setOldPrice] = useState({});
+  const [updateProduct] = useUpdateProductMutation();
+
 
   const user=useSelector(state=>state.auth.user)
 
@@ -58,16 +61,49 @@ useEffect(() => {
     dispatch(addToBasket({...product, quantity }))
     toast.success("המוצר נוסף לסל בהצלחה!")
   }
+ const handleSale = async (product) => {
+  const isCurrentlyOnSale = oldPrice[product._id] !== undefined;
 
-  const handleSale=(product)=>{
-   setOldPrice(prev => {
-   const newPrice={ ...prev,[product._id]: product.price}
-   localStorage.setItem("oldPrice",JSON.stringify(newPrice))
-   return newPrice
+  if (isCurrentlyOnSale) {
+    const prevPrice = oldPrice[product._id];
+
+    // מוחקים מחיר ישן
+    setOldPrice(prev => {
+      const { [product._id]: _, ...rest } = prev;
+      localStorage.setItem("oldPrice", JSON.stringify(rest));
+      return rest;
+    });
+
+    try {
+      console.log("Sending update:", { _id: product._id, price: prevPrice });
+      // מחזירים מחיר לשרת
+     const result= await updateProduct({
+  id: product._id,
+  formData: { price: prevPrice } // body של PUT
+}).unwrap();
+
+      console.log("Server response:", result);
+     toast.info("המבצע בוטל בהצלחה! המחיר הקודם הוחזר.");
+    } catch (err) {
+      console.error("Update error:", err);
+      toast.error("שגיאה בעדכון המחיר!");
+    }
+
+    return;
+  }
+  const savedOldPrice = product.price;
+  // הפעלת סייל — שמירת מחיר ישן
+  setOldPrice(prev => {
+    const newPrice = { ...prev, [product._id]: product.price };
+    localStorage.setItem("oldPrice", JSON.stringify(newPrice));
+    return newPrice;
   });
+
   setProductToUpdate(product);
   setShowUpdate(true);
-  }
+};
+
+
 
   const handleChangeQuantities=(productItem,value,unitType)=>{
     let newValue=value

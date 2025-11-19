@@ -47,7 +47,6 @@ const Login=()=>{
 
     return<>
     <form onSubmit={handleSubmit}>
-      <h4>{isError&&JSON.stringify(error)}</h4>
       <h4>{isLoading&&<h4>LOADING...</h4>}</h4>
         <h2>Login Form</h2>
 
@@ -59,6 +58,11 @@ const Login=()=>{
             <label>סיסמא</label>
             <div><input id="password" name="password" type="password" onChange={handleChange}/></div>
         </div>
+            {isError && (
+                <h3 style={{ color: "red" }}>
+                    {error?.data?.message || "שם משתמש או סיסמה שגויים"}
+                </h3>
+            )}
         <div>
             <button>שלח</button>
         </div>

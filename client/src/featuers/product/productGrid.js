@@ -19,13 +19,13 @@ const ProductGrid = ({
           <div key={product._id} className="product-container">
 
             {/* תמונת sale */}
-            {oldPrice[product._id] && (
+            {oldPrice[product._id] && oldPrice[product._id]>product.price&&(
               <img className="sale-image" src="/sale.png" alt="sale" />
             )}
          
             {/* תמונה */}
               <img className="product-image" src={`http://127.0.0.1:9636${product.image}`} alt={product.productName} />
-            <div className="product-info">
+              <div className="product-info">
               {/* שם מוצר */}
               <h2 className="product-name">{product.productName}</h2>
               {/* <p className="product-unit">{product.unitType}</p> */}

@@ -12,7 +12,7 @@ const Navigation = () => {
   }
 
   return (
-    <div style={{ display: "flex", gap: "10px", zIndex:1000, position: "fixed",    width: "100%",          // קו לאורך כל המסך
+    <div style={{ display: "flex", gap: "10px", zIndex:1000, position: "fixed",    width: "100%", // קו לאורך כל המסך
     backgroundColor: "rgb(246, 237, 223)",top:0,left:0,
     borderBottom: "2px solid #3a6b35", direction: "rtl" }}>
       <NavLink to='/home' style={linkStyle}>בית 🏠</NavLink>

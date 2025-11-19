@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react'
 import { loadBasket } from './featuers/basket/basketSlice';
 import Sale from './featuers/sale/sale';
-// import Update from './featuers/update/update';
+import UpdateUser from './featuers/auth/updateUser';
 
 function App() {
   //שומר את הסל קניות אחרי טעינה
@@ -30,14 +30,14 @@ function App() {
         <Route path='/' element={<Layout/>}>
           <Route index element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
+          <Route path='/update' element={<UpdateUser />} />
           <Route path='/home' element={<ProductList/>}/>
           <Route path='/add-product-form' element={<AddProductForm/>}/>
           <Route path='/update-product-form' element={<UpdateProductForm/>}/>
           <Route path='/product-list' element={<ProductList/>}/>
           <Route path='/basket' element={<BasketList/>}/>
-          <Route path='/pay' element={<Pay/>}/>
+          <Route path='/pay' element={<Pay />}/>
           <Route path='/sale' element={<Sale/>}/>
-          {/* <Route path='/update' element={<Update/>}/> */}
         </Route>
       </Routes>
     </Router>
