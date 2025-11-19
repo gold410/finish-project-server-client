@@ -15,6 +15,7 @@ import { useEffect } from 'react'
 import { loadBasket } from './featuers/basket/basketSlice';
 import Sale from './featuers/sale/sale';
 import UpdateUser from './featuers/auth/updateUser';
+import AuthPage from './featuers/auth/authPage';
 
 function App() {
   //שומר את הסל קניות אחרי טעינה
@@ -28,8 +29,8 @@ function App() {
     <Router>
       <Routes>
         <Route path='/' element={<Layout/>}>
-          <Route index element={<Login/>}/>
-          <Route path='/register' element={<Register/>}/>
+         <Route index element={<AuthPage/>}/>
+         <Route path='/register' element={<AuthPage/>}/>
           <Route path='/update' element={<UpdateUser />} />
           <Route path='/home' element={<ProductList/>}/>
           <Route path='/add-product-form' element={<AddProductForm/>}/>

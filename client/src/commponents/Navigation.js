@@ -16,8 +16,7 @@ const Navigation = () => {
     backgroundColor: "rgb(246, 237, 223)",top:0,left:0,
     borderBottom: "2px solid #3a6b35", direction: "rtl" }}>
       <NavLink to='/home' style={linkStyle}>בית 🏠</NavLink>
-      <NavLink to='/register' style={linkStyle}>הרשמה 👤</NavLink>
-      <NavLink to='/' style={linkStyle}>כניסה 🚪</NavLink>
+      <NavLink to='/' style={linkStyle}>כניסה / הרשמה 🚪</NavLink>
       <NavLink to='/basket' style={linkStyle}>עגלת קניות 🛒</NavLink>
       <NavLink to='/sale' style={linkStyle}>מבצעים ✨</NavLink>
       <NavLink to='/update' style={linkStyle}>עדכון פרטים ✏️</NavLink>
