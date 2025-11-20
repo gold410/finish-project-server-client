@@ -71,12 +71,12 @@ const ProductGrid = ({
               </div>
 
               {user?.roles==="User"&&(
-              <button className="basket-btn" onClick={()=>{handBasket(product)}}>add basket ➕</button>
+              <button className="basket-btn" onClick={()=>{handBasket(product)}}>הוסף לסל ➕</button>
               )}
              {user?.roles==="Seller"&&(
               <>
-              <button className="delete-btn" onClick={()=>{handDelete(product)}}>Delete 🗑️</button>
-              <button className="update-btn" onClick={()=>{handleOpenUpdate(product)}}>Update ✏️</button>
+              <button className="delete-btn" onClick={()=>{handDelete(product)}}>מחיקה 🗑️</button>
+              <button className="update-btn" onClick={()=>{handleOpenUpdate(product)}}>עדכון ✏️</button>
               <button className="sale-btn" onClick={()=>{handleSale(product)}}>Sale ✨</button>
               </>
               )}

@@ -19,7 +19,7 @@ const Navigation = () => {
       </div>
       <div style={linksContainer}>
       <NavLink to='/home' style={linkStyle}>בית 🏠</NavLink>
-      <NavLink to='/' style={linkStyle}>כניסה / הרשמה 🚪</NavLink>
+      {!user&&(<NavLink to='/' style={linkStyle}>כניסה / הרשמה 🚪</NavLink>)}
       <NavLink to='/basket' style={linkStyle}>עגלת קניות 🛒</NavLink>
       <NavLink to='/sale' style={linkStyle}>מבצעים ✨</NavLink>
       <NavLink to='/update' style={linkStyle}>עדכון פרטים ✏️</NavLink>

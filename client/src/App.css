@@ -560,3 +560,23 @@ form label {
     padding: 0.7rem 1rem;
   }
 }
+
+.auth-actions {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.auth-actions button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.auth-actions button:hover {
+  background-color: #357abd;
+}

@@ -48,7 +48,7 @@ const Login=()=>{
     return<>
     <form onSubmit={handleSubmit}>
       <h4>{isLoading&&<h4>LOADING...</h4>}</h4>
-        <h2>Login Form</h2>
+        <h2>כניסה</h2>
 
         <div>
             <label>שם</label>

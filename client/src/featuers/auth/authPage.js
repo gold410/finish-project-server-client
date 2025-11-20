@@ -6,7 +6,7 @@ const AuthPage = () => {
   const [showLogin, setShowLogin] = useState(true);
 
   return (
-    <div className="auth-page">
+    <div className="auth-actions">
       {showLogin ? <Login /> : <Register />}
       <div style={{textAlign: "center" }}>
         {showLogin ? (

@@ -65,7 +65,7 @@ const Register=()=>{
   };
     return(
     <form onSubmit={handleSubmit}>
-    <h2>Register Form</h2>
+    <h2>הרשמה</h2>
 
       {isLoading && <h4>טוען...</h4>}
       {isError && (

@@ -121,7 +121,7 @@ useEffect(() => {
     
   return (
     <div className="products-wrapper">
-      {user?.roles==="Seller"&&<button className="add-btn" onClick={()=>{handleOpenAdd()}}>Add product ➕</button>}
+      {user?.roles==="Seller"&&<button className="add-btn" onClick={()=>{handleOpenAdd()}}>הוסף מוצר ➕</button>}
       {showAdd&&<AddProductForm onClose={handleCloseAdd}/>}
       {showUpdate&&<UpdateProductForm product={productToUpdate} onClose={handleCloseUpdate}/>}
 
