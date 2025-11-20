@@ -14,6 +14,7 @@ const productSchema=new mongoose.Schema({
         enum:["יח'",
             "קג'",
             ],
+            default: "יח'"
     },
     image:{
         type: String,
