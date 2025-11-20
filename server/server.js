@@ -22,8 +22,7 @@ app.use("/api/order",require('./routs/orderRouts'))
 app.post('/api/uploads',upload.single('image'),(req,res)=>{
     res.json(req.file)
 })
-app.use("/api/receipt", require("./routs/receiptRoutes")); // ✅ חשוב שהנתיב נכון
-
+app.use("/api/receipt", require("./routs/receiptRoutes"))
 mongoose.connection.once('open',()=>{
     console.log("connect to server success")
     app.listen(PORT,()=>{

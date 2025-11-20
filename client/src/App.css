@@ -157,7 +157,7 @@ color:#374151;
 
 
 /* responsive */
-@media(min-width:720px){
+@media(min-width:768px){
 .add-product-form{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -167,12 +167,6 @@ gap:14px 18px;
 .add-product-form .field:nth-last-child(2){grid-column:1 / -1}
 .actions{grid-column:1 / -1}
 }
-/* .product-image- {
-  width: 200px;         
-  height: 200px;    
-  object-fit: cover; 
-  border-radius: 8px; 
-} */
 .sale-image{
   width: 60px;
   height: 60px;
@@ -471,4 +465,98 @@ form label {
 /* אפקט פוקוס */
 .search:focus {
   border-color: #e3b448;
+}
+
+
+
+
+@media (max-width: 600px) {
+
+  /* ===== גריד מוצרים ===== */
+  .products-grid {
+    grid-template-columns: 1fr; /* כרטיס אחד בשורה */
+    gap: 12px;
+  }
+
+  .product-container {
+    padding: 10px;
+  }
+
+  .product-image {
+    height: 150px;
+  }
+
+  /* ===== עגלת קניות ===== */
+  .basket-container {
+    padding: 1rem;
+  }
+
+  .basket-grid {
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .basket-card {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .basket-image {
+    width: 80%;
+    height: auto;
+  }
+
+  /* כפתורים בצד שמאל */
+  .basket-clear,
+  .pay,
+  .total-pay {
+    left: 1rem; 
+    transform: scale(0.9); /* קצת יותר קטן שלא יבלוט */
+  }
+
+  /* ===== דף תשלום ===== */
+  .pay-grid {
+    grid-template-columns: 1fr; /* כרטיס אחד לשורה */
+    gap: 15px;
+    padding: 10px;
+  }
+
+  .pay-card {
+    width: 100%;
+  }
+
+  .pay-image {
+    height: 150px;
+  }
+
+  /* ===== טופס ===== */
+  form {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+  }
+
+  form h2 {
+    font-size: 20px;
+  }
+
+  form input,
+  form button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  /* ===== חיפוש ===== */
+  .search {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  /* ===== קטגוריות ===== */
+  .kategory {
+    width: 90%;
+    left: 0;
+    text-align: center;
+    padding: 0.7rem 1rem;
+  }
 }

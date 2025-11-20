@@ -20,7 +20,7 @@ const ProductGrid = ({
           <div key={product._id} className="product-container">
 
             {/* תמונת sale */}
-            {oldPrice[product._id] && oldPrice[product._id]>product.price&&(
+            {oldPrice[product._id] && (
               <img className="sale-image" src="/sale.png" alt="sale" />
             )}
          
