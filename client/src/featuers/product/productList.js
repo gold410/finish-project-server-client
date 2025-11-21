@@ -14,7 +14,9 @@ import { useUpdateProductMutation } from "./productApiSlice";
 const ProductList = () => {
 
   const dispatch=useDispatch()
-  const { data: products = [], isLoading, isError, error } = useGetProductsQuery();
+  const [page, setPage] = useState(1)
+  const [allProducts, setAllProducts] = useState([])
+  const { data, isLoading, isError, error } = useGetProductsQuery({ page, limit: 10 });
   const [deleteProduct]=useDeleteProductMutation()
   const [showAdd,setShowAdd]=useState(false)
   const [showUpdate,setShowUpdate]=useState(false)
@@ -24,6 +26,7 @@ const ProductList = () => {
   const [search,setSearch]=useState("")
   const [oldPrice, setOldPrice] = useState({});
   const [updateProduct] = useUpdateProductMutation();
+  const [hasMore, setHasMore] = useState(true);
 
 
   const user=useSelector(state=>state.auth.user)
@@ -34,6 +37,21 @@ useEffect(() => {
     setOldPrice(JSON.parse(savedOldPrices));
   }
 }, []);
+
+useEffect(() => {
+  if (data?.products) {
+    if (page === 1) {
+      setAllProducts(data.products)
+    } else {
+      setAllProducts(prev => {
+        const existingIds = new Set(prev.map(p => p._id))
+        const newProducts = data.products.filter(p => !existingIds.has(p._id))
+        return [...prev, ...newProducts]
+      })
+    }
+    setHasMore(data.hasMore)
+  }
+}, [data, page]);
 
   console.log("Current user:", user);
 
@@ -136,7 +154,7 @@ useEffect(() => {
 
       <h1 className="products-title">🍍 טרי לי 🍍</h1>
 <ProductGrid
-  products={products.filter(
+  products={allProducts.filter(
     (p) =>
       (selectCategory === "all" || p.kategory === selectCategory) &&
       p.productName.toLowerCase().includes(search.toLowerCase())
@@ -150,6 +168,18 @@ useEffect(() => {
   handleSale={handleSale}
   oldPrice={oldPrice}
 />
+
+{hasMore && (
+  <div style={{ textAlign: 'center', margin: '20px 0' }}>
+    <button 
+      className="add-btn" 
+      onClick={() => setPage(prev => prev + 1)}
+      disabled={isLoading}
+    >
+      {isLoading ? 'טוען...' : 'הצג עוד מוצרים 📦'}
+    </button>
+  </div>
+)}
 
     </div>
   );

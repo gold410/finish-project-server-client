@@ -3,10 +3,14 @@ import apiSlice from "../../app/apiSlice";
 const productApiSlice=apiSlice.injectEndpoints({
     endpoints:(build)=>({
         getProducts:build.query({
-            query:()=>({
-                url:"api/products/getAll"
+            query:(params = {})=>({
+                url:"api/products/getAll",
+                params
             }),
-            providesTags: ["Product"]
+            providesTags: ["Product"],
+            serializeQueryArgs: ({ queryArgs }) => {
+                return `products-${queryArgs.page || 1}`
+            }
         }),
         createProduct:build.mutation({
             query:(product)=>({
@@ -31,8 +35,16 @@ const productApiSlice=apiSlice.injectEndpoints({
                body:formData
            }),
            invalidatesTags:["Product"]
+        }),
+        updateStock:build.mutation({
+            query:(items)=>({
+                url:"api/products/updateStock",
+                method:"PUT",
+                body:{items}
+            }),
+            invalidatesTags:["Product"]
         })
     })
 })
 
-export const{useGetProductsQuery, useDeleteProductMutation,useCreateProductMutation,useUpdateProductMutation}=productApiSlice
+export const{useGetProductsQuery, useDeleteProductMutation,useCreateProductMutation,useUpdateProductMutation,useUpdateStockMutation}=productApiSlice

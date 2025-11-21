@@ -3,11 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { toast } from 'react-toastify';
 import { clearBasket } from "../basket/basketSlice";
 import { useState } from "react";
+import { useUpdateStockMutation } from "../product/productApiSlice";
 
 const Pay = () => {
   const items = useSelector((state) => state.basket.items);
 const userEmail = useSelector((state) => state.auth.user?.email);
   const dispatch = useDispatch();
+  const [updateStock] = useUpdateStockMutation();
   const [thankYou, setThankYou] = useState(false);
   const [emailInput, setEmailInput] = useState(""); // אם המשתמש לא מחובר
 
@@ -20,6 +22,9 @@ const userEmail = useSelector((state) => state.auth.user?.email);
       return;
     }
     try {
+      // עדכון המלאי
+      await updateStock(items).unwrap();
+      
       // שולחים את הקבלה למייל
       await fetch("http://localhost:9636/api/receipt", {
         method: "POST",
@@ -27,15 +32,15 @@ const userEmail = useSelector((state) => state.auth.user?.email);
         body: JSON.stringify({ email: userEmail, items, totalPrice })
       });
       toast.success("קבלה נשלחה למייל!");
+      
+      // מנקים סל ומציגים תודה
+      dispatch(clearBasket());
+      setThankYou(true);
+      toast.success("התשלום הצליח!");
     } catch (err) {
       console.error(err);
-      toast.error("שגיאה בשליחת הקבלה");
+      toast.error("שגיאה בתשלום");
     }
-
-    // מנקים סל ומציגים תודה
-    dispatch(clearBasket());
-    setThankYou(true);
-    toast.success("התשלום הצליח!");
   };
 
   return (

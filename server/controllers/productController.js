@@ -1,12 +1,24 @@
 const Product = require("../models/Product")
 
 const getAllProducts=async(req,res)=>{
-    //.skip(20).limit(20).populate("saller")
-  const products= await Product.find().lean()
+  const page = parseInt(req.query.page) || 1
+  const limit = parseInt(req.query.limit) || 10
+  const skip = (page - 1) * limit
+  
+  const products = await Product.find().skip(skip).limit(limit).lean()
+  const totalProducts = await Product.countDocuments()
+  
   if(!products){
-  return res.status(400).json({message:'no products found'})
+    return res.status(400).json({message:'no products found'})
   }
-  res.json(products)
+  
+  res.json({
+    products,
+    totalProducts,
+    currentPage: page,
+    totalPages: Math.ceil(totalProducts / limit),
+    hasMore: skip + products.length < totalProducts
+  })
 }
 
 const getProductById=async(req,res)=>{
@@ -82,4 +94,30 @@ const deleteProduct=("/:id",async(req,res)=>{
     res.json(`${name} deleted`)
 })
 
-module.exports={getAllProducts,createNewProduct,getProductById,updateProduct,deleteProduct}
+const updateStock = async (req, res) => {
+    const { items } = req.body
+    
+    try {
+        for (const item of items) {
+            const product = await Product.findById(item._id)
+            if (!product) {
+                return res.status(404).json({ message: `Product ${item.productName} not found` })
+            }
+            
+            if (product.inventory < item.quantity) {
+                return res.status(400).json({ 
+                    message: `Not enough stock for ${item.productName}. Available: ${product.inventory}, Requested: ${item.quantity}` 
+                })
+            }
+            
+            product.inventory -= item.quantity
+            await product.save()
+        }
+        
+        res.json({ message: 'Stock updated successfully' })
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating stock', error: error.message })
+    }
+}
+
+module.exports={getAllProducts,createNewProduct,getProductById,updateProduct,deleteProduct,updateStock}

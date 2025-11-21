@@ -90,7 +90,20 @@ body{
     margin: 10px;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
   }
+
+.add-btn:hover {
+    background-color: #4a8144;
+    transform: translateY(-2px);
+}
+
+.add-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    transform: none;
+}
 
 .delete-btn:hover {
     background-color: #be123c;
@@ -445,7 +458,8 @@ form label {
 }
 /* עיצוב שדה החיפוש */
 .search {
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   font-size: 16px;
   border-radius: 12px;
   border: 2px solid #cfcfcf;
@@ -455,11 +469,12 @@ form label {
   direction: rtl;
   cursor: text;
   background-repeat: no-repeat;
- padding: 8px 12px;
+  padding: 8px 12px;
   display: block;
   margin-right: 0;
   margin-left: auto;
-  
+  margin-bottom: 20px;
+  box-sizing: border-box;
 }
 
 /* אפקט פוקוס */
@@ -469,6 +484,222 @@ form label {
 
 
 
+
+/* ===== טאבלט גדול (1024px - 1200px) ===== */
+@media (min-width: 1024px) and (max-width: 1200px) {
+  
+  body {
+    padding-top: 180px;
+  }
+
+  .products-title {
+    font-size: 2.8rem;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 18px;
+  }
+
+  .basket-grid {
+    width: 35%;
+  }
+
+  .pay-grid {
+    grid-template-columns: repeat(4, 200px);
+  }
+
+  form {
+    width: 420px;
+  }
+
+  .search {
+    max-width: 380px;
+  }
+}
+
+/* ===== טאבלט רגיל (768px - 1024px) ===== */
+@media (min-width: 768px) and (max-width: 1024px) {
+  
+  body {
+    padding-top: 170px; /* התאמה לגובה הניווט בטאבלט */
+  }
+
+  /* ===== ניווט ===== */
+  .products-title {
+    font-size: 2.5rem;
+  }
+
+  /* ===== גריד מוצרים ===== */
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    padding: 0 10px;
+  }
+
+  .product-container {
+    padding: 12px;
+  }
+
+  .product-image {
+    height: 180px;
+  }
+
+  .product-name {
+    font-size: 1.1rem;
+  }
+
+  .product-price {
+    font-size: 0.95rem;
+  }
+
+  .product-description {
+    font-size: 0.85rem;
+  }
+
+  /* כפתורים */
+  .delete-btn, .update-btn, .basket-btn, .sale-btn {
+    padding: 7px 11px;
+    font-size: 14px;
+    margin: 3px;
+  }
+
+  .add-btn {
+    padding: 12px 8px;
+    font-size: 15px;
+  }
+
+  /* ===== עגלת קניות ===== */
+  .basket-container {
+    padding: 1.5rem;
+  }
+
+  .basket-grid {
+    width: 40%;
+    gap: 1.2rem;
+  }
+
+  .basket-card {
+    padding: 1.2rem;
+  }
+
+  .basket-image {
+    width: 60%;
+    height: 60%;
+  }
+
+  .basket-title, .no-basket, .pay-title {
+    font-size: 1.8rem;
+  }
+
+  .basket-name {
+    font-size: 1rem;
+  }
+
+  .basket-price, .basket-quantity, .basket-description {
+    font-size: 0.9rem;
+  }
+
+  .basket-clear {
+    left: 2rem;
+    padding: 0.7rem 2rem;
+    font-size: 15px;
+  }
+
+  .pay {
+    left: 2rem;
+    padding: 1rem 3.5rem;
+    font-size: 16px;
+  }
+
+  .total-pay {
+    left: 2rem;
+    font-size: 1.3rem;
+  }
+
+  /* ===== דף תשלום ===== */
+  .pay-grid {
+    grid-template-columns: repeat(3, 220px);
+    gap: 18px;
+    padding: 15px;
+  }
+
+  .pay-card {
+    width: 220px;
+    padding: 12px;
+  }
+
+  .pay-name {
+    font-size: 0.85rem;
+  }
+
+  .pay-price {
+    font-size: 0.95rem;
+  }
+
+  .pay-quantity {
+    font-size: 0.75rem;
+  }
+
+  /* ===== טופס ===== */
+  form {
+    width: 400px;
+    padding: 25px;
+  }
+
+  form h2 {
+    font-size: 22px;
+  }
+
+  form input {
+    padding: 11px;
+    font-size: 14px;
+  }
+
+  form button {
+    padding: 11px;
+    font-size: 15px;
+  }
+
+  form label {
+    font-size: 14px;
+  }
+
+  /* ===== חיפוש ===== */
+  .search {
+    max-width: 350px;
+    font-size: 15px;
+    padding: 7px 11px;
+  }
+
+  /* ===== קטגוריות ===== */
+  .kategory {
+    padding: 0.8rem 2.5rem;
+    left: 1rem;
+    font-size: 16px;
+  }
+
+  /* ===== שדות קלט ===== */
+  .control input[type="text"],
+  .control input[type="number"],
+  .control textarea,
+  .control select {
+    padding: 9px 11px;
+    font-size: 13px;
+  }
+
+  .controler input[type="number"] {
+    width: 45px;
+    padding: 4px 7px;
+    font-size: 13px;
+  }
+
+  /* ===== כפתורי פעולות ===== */
+  .btn {
+    padding: 7px 12px;
+    font-size: 14px;
+  }
+}
 
 @media (max-width: 600px) {
 
@@ -548,7 +779,7 @@ form label {
 
   /* ===== חיפוש ===== */
   .search {
-    width: 100%;
+    max-width: 100%;
     font-size: 14px;
   }
 

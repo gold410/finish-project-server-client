@@ -4,7 +4,11 @@ const authSlice=createSlice({
 name:"auth",
 initialState:{
     token:localStorage.getItem("token")||"",
-    isLoginUser:localStorage.getItem("token")?true:false,
+    isLoginUser: (() => {
+        const token = localStorage.getItem("token");
+        const userStr = localStorage.getItem("user");
+        return !!(token || (userStr && userStr !== "undefined"));
+    })(),
     user: (() => {
         const userStr = localStorage.getItem("user");
         try {
@@ -23,6 +27,7 @@ reducers:{
     },
        setUser:(state,action)=>{
         state.user=action.payload.user
+        state.isLoginUser=true // גם למשתמש Google
         localStorage.setItem("user",JSON.stringify(action.payload.user))
     },
     removeToken:(state)=>{
