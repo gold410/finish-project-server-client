@@ -1,22 +1,18 @@
 import ProductGrid from "../product/productGrid";
-import { useGetProductsQuery,useDeleteProductMutation,useUpdateProductMutation } from "../product/productApiSlice";
+import { useGetProductsQuery,useUpdateProductMutation } from "../product/productApiSlice";
 import { toast } from 'react-toastify';
 import { useDispatch,useSelector } from "react-redux";
 import { useState ,useEffect} from "react";
 import { addToBasket } from "../basket/basketSlice";
 
 const Sale=()=>{
-
     const dispatch=useDispatch()
-    const { data: products = [], isLoading, isError, error } = useGetProductsQuery();
+    const { data, isLoading, isError, error } = useGetProductsQuery({ page: 1, limit: 1000 });
+    const products = data?.products || [];
     const user = useSelector(state => state.auth.user);
-      // const [deleteProduct]=useDeleteProductMutation()
-      // const [showAdd,setShowAdd]=useState(false)
       const [showUpdate,setShowUpdate]=useState(false)
       const [productToUpdate,setProductToUpdate]=useState(null)
       const [quantities,setQuantities]= useState({})
-    //   const [selectCategory, setSelectCategory] = useState("all");
-    //   const [search,setSearch]=useState("")
       const [oldPrice, setOldPrice] = useState({});
       const [updateProduct]=useUpdateProductMutation()
 
@@ -29,91 +25,49 @@ const Sale=()=>{
 
        if (isLoading) return <div className="loading">Loading...</div>;
        if (isError) return <div className="error">Error: {error.toString()}</div>;
-
+//סינון מוצרי sale
     const saleProducts = products.filter(p => oldPrice[p._id] !== undefined);
-
-  //     const handDelete=(productItem)=>{
-  //   deleteProduct(productItem._id)
-  // }
-  
-  // const handleOpenAdd=()=>{setShowAdd(true)}
-  // const handleCloseAdd=()=>{setShowAdd(false)}
-
-  // const handleOpenUpdate=(product)=>{
-  //   setProductToUpdate(product)
-  //   setShowUpdate(true)
-  // }
-  // const handleCloseUpdate=()=>{
-  //   setProductToUpdate(null)
-  //   setShowUpdate(false)
-  // }
 
     const handBasket = (product) => {
         const quantity = quantities[product._id] || 1
         dispatch(addToBasket({ ...product, quantity }))
         toast.success("המוצר נוסף לסל בהצלחה!")
     }
-
+//פונקציית הסייל - מפעילה ומכבה סייל
   const handleSale = async (product) => {
   //בודק האם המוצר במבצע
   const isCurrentlyOnSale = oldPrice[product._id] !== undefined;
   //אם כן - ביטול סייל
   if (isCurrentlyOnSale) {
-    //שולף את המחיר הקודם
-    const prevPrice = oldPrice[product._id];
-     console.log("PrevPrice:", oldPrice[product._id]);
-console.log("Sending update:", { price: Number(oldPrice[product._id]) });
-
-     try {
-      // מחזירים את המחיר הקודם לשרת
-      // const result=await updateProduct({
-      //   id: product._id,
-      //   formData: { price: prevPrice } // body של PUT
-      // }).unwrap();
-const prevPrice = Number(oldPrice[product._id]); // המרה למספר
-
-console.log("Sending update:", { price: prevPrice });
-
-await updateProduct({
-  id: product._id,
-  formData: { price: prevPrice },
-  originalPrice: null // רק price
-}).unwrap();
-
-
+    //שולף את המחיר הקודם ומעדכן את השרת
+    const prevPrice = Number(oldPrice[product._id])
+    try {
+    await updateProduct({
+      id: product._id,
+      formData: { price: prevPrice }
+    }).unwrap()
     // מוחקים את המוצר שלא בסייל כבר
     setOldPrice(prev => {
-      const { [product._id]: _, ...rest } = prev;
-      localStorage.setItem("oldPrice", JSON.stringify(rest));
-      return rest;
-    });
-     toast.info("המבצע בוטל בהצלחה! המחיר הקודם הוחזר.");
-
-//       console.log("Sending update:", { _id: product._id, price: prevPrice });
-//       // מחזירים מחיר לשרת
-//      const result= await updateProduct({
-//   id: product._id,
-//   formData: { price: prevPrice } // body של PUT
-// }).unwrap();
-
-//       console.log("Server response:", result);
+      const { [product._id]: _, ...rest } = prev
+      localStorage.setItem("oldPrice", JSON.stringify(rest))
+      return rest
+    })
+     toast.info("המבצע בוטל בהצלחה! המחיר הקודם הוחזר.")
     } catch (err) {
-      console.error("Update error:", err);
-      toast.error("שגיאה בעדכון המחיר!");
+      console.error("Update error:", err)
+      toast.error("שגיאה בעדכון המחיר!")
     }
-
-    return;
+    return
   }
   // אם המוצר לא במבצע- מפעילים סייל
   setOldPrice(prev => {
-    const newPrice = { ...prev, [product._id]: product.price };
-    localStorage.setItem("oldPrice", JSON.stringify(newPrice));
-    return newPrice;
-  });
-
-  setProductToUpdate(product);
-  setShowUpdate(true);
-};
+    const newPrice = { ...prev, [product._id]: product.price }
+    localStorage.setItem("oldPrice", JSON.stringify(newPrice))
+    return newPrice
+  })
+  setProductToUpdate(product)
+  setShowUpdate(true)
+}
 
   const handleChangeQuantities=(productItem,value,unitType)=>{
     let newValue=value
@@ -136,8 +90,6 @@ await updateProduct({
   quantities={quantities}
   handleChangeQuantities={handleChangeQuantities}
   handBasket={handBasket}
-  // handDelete={handDelete}
-  // handleOpenUpdate={handleOpenUpdate}
   handleSale={handleSale}
   oldPrice={oldPrice}
     />

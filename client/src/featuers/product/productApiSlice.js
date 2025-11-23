@@ -8,9 +8,10 @@ const productApiSlice=apiSlice.injectEndpoints({
                 params
             }),
             providesTags: ["Product"],
-            serializeQueryArgs: ({ queryArgs }) => {
+                      serializeQueryArgs: ({ queryArgs }) => {
                 return `products-${queryArgs.page || 1}`
             }
+
         }),
         createProduct:build.mutation({
             query:(product)=>({

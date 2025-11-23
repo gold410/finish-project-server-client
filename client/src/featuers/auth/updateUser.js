@@ -55,10 +55,10 @@ const UpdateUser = () => {
       }).unwrap();
 
       dispatch(setUser(updatedData))
-localStorage.setItem("user", JSON.stringify(updatedData)); // עדכון localStorage
+      localStorage.setItem("user", JSON.stringify(updatedData)); // עדכון localStorage
       alert("המשתמש עודכן בהצלחה!")
-setForm((prev) => ({ ...prev, password: "" }))
-navigate("/home"); 
+      setForm((prev) => ({ ...prev, password: "" }))
+      navigate("/home");
     } catch (err) {
       console.error("Update error:", err);
       alert(err?.data?.message || "שגיאה בעדכון המשתמש")

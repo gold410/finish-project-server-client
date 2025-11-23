@@ -29,20 +29,18 @@ const ProductGrid = ({
               <div className="product-info">
               {/* שם מוצר */}
               <h2 className="product-name">{product.productName}</h2>
-              {/* <p className="product-unit">{product.unitType}</p> */}
               {/* תאור */}
               <p className="product-description">{product.description}</p>
               {/* כמות */}
               <div className="field">
-              {/* <label htmlFor={`quentity-${product._id}`}>{product.unitType}</label> */}
               <div className="controler">
                 {product.unitType === "יח'" ? "'יח" : "'קג"}
                 <input id="quantity" name="quantity" type="number" min={1} step={product.unitType === "יח'" ? 1 : 0.5} value={quentity} onChange={(e)=>{
-                let val = Number(e.target.value);
+                let val = Number(e.target.value)
                   if (product.unitType === "יח'") {
-                    val = Math.max(1, Math.round(val)); // עיגול למספר שלם למוצרים ביחידות
+                    val = Math.max(1, Math.round(val)) // עיגול למספר שלם למוצרים ביחידות
                   } else {
-                    val = Math.max(0.5, val); // מינימום 0.5 לקילו
+                    val = Math.max(0.5, val) // מינימום 0.5 לקילו
                   }
                   handleChangeQuantities(product._id,val,product.unitType)
                 }}/>

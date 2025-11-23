@@ -5,16 +5,16 @@ name:"auth",
 initialState:{
     token:localStorage.getItem("token")||"",
     isLoginUser: (() => {
-        const token = localStorage.getItem("token");
-        const userStr = localStorage.getItem("user");
-        return !!(token || (userStr && userStr !== "undefined"));
+        const token = localStorage.getItem("token")
+        const userStr = localStorage.getItem("user")
+        return !!(token || (userStr && userStr !== "undefined"))
     })(),
     user: (() => {
-        const userStr = localStorage.getItem("user");
+        const userStr = localStorage.getItem("user")
         try {
-            return userStr && userStr !== "undefined" ? JSON.parse(userStr) : null;
+            return userStr && userStr !== "undefined" ? JSON.parse(userStr) : null
         } catch {
-            return null;
+            return null
         }
     })(),
 },
@@ -27,7 +27,7 @@ reducers:{
     },
        setUser:(state,action)=>{
         state.user=action.payload.user
-        state.isLoginUser=true // גם למשתמש Google
+        state.isLoginUser=true 
         localStorage.setItem("user",JSON.stringify(action.payload.user))
     },
     removeToken:(state)=>{

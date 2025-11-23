@@ -10,12 +10,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import ProductGrid from "./productGrid";
 import { useUpdateProductMutation } from "./productApiSlice";
 
-
 const ProductList = () => {
 
   const dispatch=useDispatch()
   const [page, setPage] = useState(1)
   const [allProducts, setAllProducts] = useState([])
+  const [search,setSearch]=useState("")
   const { data, isLoading, isError, error } = useGetProductsQuery({ page, limit: 10 });
   const [deleteProduct]=useDeleteProductMutation()
   const [showAdd,setShowAdd]=useState(false)
@@ -23,21 +23,19 @@ const ProductList = () => {
   const [productToUpdate,setProductToUpdate]=useState(null)
   const [quantities,setQuantities]= useState({})
   const [selectCategory, setSelectCategory] = useState("all");
-  const [search,setSearch]=useState("")
   const [oldPrice, setOldPrice] = useState({});
   const [updateProduct] = useUpdateProductMutation();
   const [hasMore, setHasMore] = useState(true);
 
-
   const user=useSelector(state=>state.auth.user)
-
+//שמירת המחירים הישנים
 useEffect(() => {
   const savedOldPrices = localStorage.getItem("oldPrice");
   if (savedOldPrices) {
     setOldPrice(JSON.parse(savedOldPrices));
   }
 }, []);
-
+//מציג את המוצרים כל פעם שpage או  data משתנה מציג בלי כפילות מוצרים
 useEffect(() => {
   if (data?.products) {
     if (page === 1) {
@@ -109,20 +107,16 @@ useEffect(() => {
 
     return;
   }
-  const savedOldPrice = product.price;
   // הפעלת סייל — שמירת מחיר ישן
   setOldPrice(prev => {
     const newPrice = { ...prev, [product._id]: product.price };
     localStorage.setItem("oldPrice", JSON.stringify(newPrice));
     return newPrice;
-  });
-
+  })
   setProductToUpdate(product);
   setShowUpdate(true);
-};
-
-
-
+}
+//שומר על החוקיות של הכמות 1 ליח ו0.5 לקילו
   const handleChangeQuantities=(productItem,value,unitType)=>{
     let newValue=value
     if(unitType==="יח'"){
@@ -150,7 +144,7 @@ useEffect(() => {
   <button className="kategory" onClick={() => setSelectCategory("עלים")}>עלים 🥬</button>
 </div>
 
-<input className="search" id="search" name="search" type="text" placeholder="חפש מוצר 🔍" value={search} onChange={(e)=>setSearch(e.target.value)}></input>
+<input className="search" id="search" name="search" type="text" placeholder="חפש מוצר 🔍" value={search} onChange={(e) => setSearch(e.target.value)}></input>
 
       <h1 className="products-title">🍍 טרי לי 🍍</h1>
 <ProductGrid

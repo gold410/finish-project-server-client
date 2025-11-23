@@ -1,6 +1,4 @@
-import './App.css';
-import Login from './featuers/auth/login';
-import Register from './featuers/auth/register';
+import './App.css'
 import AddProductForm from './featuers/product/addProductForm';
 import UpdateProductForm from './featuers/product/updateProductForm';
 import ProductList from './featuers/product/productList'
@@ -9,13 +7,13 @@ import Layout from './commponents/Layout'
 import BasketList from './featuers/basket/basketList';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Pay from './featuers/pay/pay';
-import { useDispatch } from 'react-redux';
+import Pay from './featuers/pay/pay'
+import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
-import { loadBasket } from './featuers/basket/basketSlice';
-import Sale from './featuers/sale/sale';
-import UpdateUser from './featuers/auth/updateUser';
-import AuthPage from './featuers/auth/authPage';
+import { loadBasket } from './featuers/basket/basketSlice'
+import Sale from './featuers/sale/sale'
+import UpdateUser from './featuers/auth/updateUser'
+import AuthPage from './featuers/auth/authPage'
 
 function App() {
   //שומר את הסל קניות אחרי טעינה

@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react"
 import { useRegisterMutation ,useUpdateUserMutation} from "./authApiSlice"
 import { useNavigate } from "react-router-dom"
-// import { useDispatch, useSelector } from "react-redux"
-// import { setUser } from "./authSlice"
 
 const Register=()=>{
 
   const nav=useNavigate()
-  // const dispatch=useDispatch()
-  // const { user } = useSelector((state) => state.auth);
     const [registerFunc,{isError,isLoading,isSuccess,error}]=useRegisterMutation()
-   // const[updateUserFunc]=useUpdateUserMutation()
 
     const [form, setForm]=useState({
     name: "",
@@ -19,11 +14,6 @@ const Register=()=>{
     email: "",
     })
 
-    // useEffect(()=>{
-    //  if(isSuccess){
-    //   nav('/')
-    //  }
-    // },[isSuccess])
     const handleChange=(e)=>{
       setForm({...form,[e.target.name]:e.target.value})
     }
@@ -35,8 +25,7 @@ const Register=()=>{
      alert("הסיסמה חייבת לכלול לפחות אות באנגלית, לפחות תו מיוחד ולפחות 6 תווים");
       return;
     }
-    // כאן תשלחי את הנתונים לשרת
-    console.log("Password is strong! Submit the form.");
+    console.log("Password is strong!");
 
     if(!form.email.includes('@')||!form.email.includes('.')){
       alert("איימיל חייב לכלול @ ו . ")
@@ -47,7 +36,7 @@ const Register=()=>{
     return;
   }
   try{
-    await registerFunc(form).unwrap();
+    await registerFunc(form).unwrap()
       alert("ההרשמה בוצעה בהצלחה!");
 
       setForm({
@@ -57,7 +46,7 @@ const Register=()=>{
         email: "",
       });
 
-      nav("/"); // נווט לדף הבית או דף לוגין
+      nav("/"); // נווט לדף לוגין
     } catch (err) {
       console.error("שגיאה בהרשמה:", err);
       alert(err?.data?.message || "שגיאה בשרת");

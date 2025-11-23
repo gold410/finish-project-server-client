@@ -14,5 +14,6 @@ router.put("/:id", (req, res, next) => {
         next()
     })
 }, productController.updateProduct)
+router.get("/search",productController.searchProducts)
 
 module.exports=router

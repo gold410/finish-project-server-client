@@ -4,9 +4,17 @@ const getAllProducts=async(req,res)=>{
   const page = parseInt(req.query.page) || 1
   const limit = parseInt(req.query.limit) || 10
   const skip = (page - 1) * limit
+  const { q } = req.query
   
-  const products = await Product.find().skip(skip).limit(limit).lean()
-  const totalProducts = await Product.countDocuments()
+  let query = {}
+  if (q) {
+    query = {
+      productName: { $regex: q, $options: 'i' }
+    }
+  }
+  
+  const products = await Product.find(query).skip(skip).limit(limit).lean()
+  const totalProducts = await Product.countDocuments(query)
   
   if(!products){
     return res.status(400).json({message:'no products found'})
@@ -120,4 +128,21 @@ const updateStock = async (req, res) => {
     }
 }
 
-module.exports={getAllProducts,createNewProduct,getProductById,updateProduct,deleteProduct,updateStock}
+const searchProducts= async (req, res) => {
+    try{
+    const q=req.query.q||""
+const products=await Product.find({
+    //$regex-מכיל את q
+    //$options-משווה אותיות קטנות גדולות
+productName:{$regex:q,$options:"i"}
+}).lean()
+   res.json({
+      products,
+      count: products.length
+    });
+    }catch(err){
+        res.status(500).json({ message: err.message })
+    }
+}
+
+module.exports={getAllProducts,createNewProduct,getProductById,updateProduct,deleteProduct,updateStock,searchProducts}

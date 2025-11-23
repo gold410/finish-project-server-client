@@ -43,8 +43,9 @@ const Navigation = () => {
          </div>
 <h1 style={styles.userText}>שלום {user ? (user.displayName || user.name) : "אורח/ת"}</h1>    
 </div>
-  );
-};
+  )
+}
+//בודק את גודל המסך 
 const getResponsiveStyles = () => {
   const isTablet = window.innerWidth >= 768 && window.innerWidth <= 1024;
   const isMobile = window.innerWidth < 768;

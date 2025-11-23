@@ -11,15 +11,14 @@ const userEmail = useSelector((state) => state.auth.user?.email);
   const dispatch = useDispatch();
   const [updateStock] = useUpdateStockMutation();
   const [thankYou, setThankYou] = useState(false);
-  const [emailInput, setEmailInput] = useState(""); // אם המשתמש לא מחובר
 
-  const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
   const handlePay = async () => {
-     const email = userEmail || emailInput;
+     const email = userEmail
     if (!email) {
-      toast.error("אנא הזן את המייל כדי לקבל קבלה");
-      return;
+      toast.error("אמייל לא נמצא, נא עבור לעדכון פרטים");
+      return
     }
     try {
       // עדכון המלאי
@@ -33,8 +32,8 @@ const userEmail = useSelector((state) => state.auth.user?.email);
       });
       toast.success("קבלה נשלחה למייל!");
       
-      // מנקים סל ומציגים תודה
-      dispatch(clearBasket());
+      // מנקים את הסל 
+      dispatch(clearBasket())
       setThankYou(true);
       toast.success("התשלום הצליח!");
     } catch (err) {
