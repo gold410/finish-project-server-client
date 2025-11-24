@@ -11,7 +11,6 @@ const productApiSlice=apiSlice.injectEndpoints({
                       serializeQueryArgs: ({ queryArgs }) => {
                 return `products-${queryArgs.page || 1}`
             }
-
         }),
         createProduct:build.mutation({
             query:(product)=>({
@@ -44,8 +43,14 @@ const productApiSlice=apiSlice.injectEndpoints({
                 body:{items}
             }),
             invalidatesTags:["Product"]
-        })
+        }),
+            getSearchProducts: build.query({
+            query: ({ page = 1, limit = 10, q = "" }) => ({
+                url: "api/products/getAll",
+                params: { page, limit, q }
+            })
+            })
     })
 })
 
-export const{useGetProductsQuery, useDeleteProductMutation,useCreateProductMutation,useUpdateProductMutation,useUpdateStockMutation}=productApiSlice
+export const{useGetProductsQuery, useDeleteProductMutation,useCreateProductMutation,useUpdateProductMutation,useUpdateStockMutation,useGetSearchProductsQuery}=productApiSlice

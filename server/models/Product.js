@@ -14,7 +14,8 @@ const productSchema=new mongoose.Schema({
         enum:["יח'",
             "קג'",
             ],
-            default: "יח'"
+         required: false, // עכשיו אפשר להשאיר ריק
+         default: "יח'"   // או להגדיר ערך ברירת מחדל
     },
     image:{
         type: String,
@@ -42,10 +43,7 @@ const productSchema=new mongoose.Schema({
     comments:{
         type:[mongoose.Schema.Types.ObjectId],
         ref:"Comment"
-    },
-    originalPrice:{ 
-        type: Number 
-    },
+    }
 },{
     timestamps: true
 })

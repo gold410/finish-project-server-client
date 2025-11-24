@@ -1,4 +1,4 @@
-import { useGetProductsQuery ,useDeleteProductMutation} from "./productApiSlice";
+import { useGetProductsQuery ,useDeleteProductMutation,useGetSearchProductsQuery} from "./productApiSlice";
 import { addToBasket } from "../basket/basketSlice";
 import "../../App.css";
 import AddProductForm from './addProductForm'
@@ -16,7 +16,21 @@ const ProductList = () => {
   const [page, setPage] = useState(1)
   const [allProducts, setAllProducts] = useState([])
   const [search,setSearch]=useState("")
-  const { data, isLoading, isError, error } = useGetProductsQuery({ page, limit: 10 });
+  // אם יש חיפוש - השתמש ב-search API, אחרת - ב-רגיל
+  const searchQuery = useGetSearchProductsQuery(
+    { page: 1, limit: 1000, q: search },
+    { skip: !search || search.length < 1 } // רץ רק אם יש חיפוש משמעותי
+  );
+  
+  const regularQuery = useGetProductsQuery(
+    { page, limit: 10 },
+    { skip: !!search && search.length > 0 } // רץ רק אם אין חיפוש
+  );
+  
+  // בחר איזה query להשתמש
+  const { data, isLoading, isError, error } = search && search.length > 0 ? searchQuery : regularQuery;
+  
+
   const [deleteProduct]=useDeleteProductMutation()
   const [showAdd,setShowAdd]=useState(false)
   const [showUpdate,setShowUpdate]=useState(false)
@@ -37,24 +51,35 @@ useEffect(() => {
 }, []);
 //מציג את המוצרים כל פעם שpage או  data משתנה מציג בלי כפילות מוצרים
 useEffect(() => {
-  if (data?.products) {
-    if (page === 1) {
-      setAllProducts(data.products)
+  // בדיקה אם data הוא array או אובייקט עם products
+  const products = Array.isArray(data) ? data : data?.products;
+  
+  if (products && products.length > 0) {
+    // אם יש חיפוש או עמוד ראשון - החלף את כל המוצרים
+    if (search || page === 1) {
+      setAllProducts(products)
+      // אחרת הוסף מוצרים חדשים
     } else {
-      setAllProducts(prev => {
-        const existingIds = new Set(prev.map(p => p._id))
-        const newProducts = data.products.filter(p => !existingIds.has(p._id))
+      setAllProducts((prev) => {
+        //לוקח את כל הID של כל המוצרים
+        const existingIds = prev.map((p) => p._id)
+        //מסנן את המוצרים החדשים כדי שלא יהיה כפילויות
+        const newProducts = products.filter((p) => !existingIds.includes(p._id))
+        //מחזיר state חדש עם כל המוצרים 
         return [...prev, ...newProducts]
       })
     }
-    setHasMore(data.hasMore)
+    setHasMore(search ? false : (data.hasMore || false)) // אין pagination בחיפוש
   }
-}, [data, page]);
+}, [data, page, search])
 
-  console.log("Current user:", user);
 
-  if (isLoading) return <div className="loading">Loading...</div>;
-  if (isError) return <div className="error">Error: {error.toString()}</div>;
+
+  if (isLoading) return <div className="loading">Loading...</div>
+  if (isError) {
+    console.log("Error details:", error);
+    return <div className="error">Error: {error?.message || error?.data?.message || JSON.stringify(error)}</div>
+  }
 
   const handDelete=(productItem)=>{
     deleteProduct(productItem._id)
@@ -129,8 +154,9 @@ useEffect(() => {
     [productItem]:newValue,
     }))
   }
-    console.log("user roles:", user?.roles)
-    
+
+
+
   return (
     <div className="products-wrapper">
       {user?.roles==="Seller"&&<button className="add-btn" onClick={()=>{handleOpenAdd()}}>הוסף מוצר ➕</button>}
@@ -144,14 +170,17 @@ useEffect(() => {
   <button className="kategory" onClick={() => setSelectCategory("עלים")}>עלים 🥬</button>
 </div>
 
-<input className="search" id="search" name="search" type="text" placeholder="חפש מוצר 🔍" value={search} onChange={(e) => setSearch(e.target.value)}></input>
+<input className="search" id="search" name="search" type="text" placeholder="חפש מוצר 🔍" value={search} onChange={(e) => {
+  setSearch(e.target.value)
+  setPage(1) // איפוס לעמוד הראשון בחיפוש חדש
+}}></input>
 
       <h1 className="products-title">🍍 טרי לי 🍍</h1>
 <ProductGrid
   products={allProducts.filter(
     (p) =>
-      (selectCategory === "all" || p.kategory === selectCategory) &&
-      p.productName.toLowerCase().includes(search.toLowerCase())
+      (selectCategory === "all" || p.kategory === selectCategory)
+      // החיפוש מתבצע בשרת, לא צריך סינון מקומי
   )}
   user={user}
   quantities={quantities}

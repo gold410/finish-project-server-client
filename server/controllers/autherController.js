@@ -30,8 +30,6 @@ console.log('userInfo:', userInfo);
  res.json({token:token})
 }
 
-
-
 const register=async(req,res)=>{
     const {userName,password,name,email,phone,active}=req.body
     if(!userName||!password||!name)
