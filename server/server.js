@@ -5,7 +5,7 @@ const mongoose=require('mongoose')
 const corsOptions = require("./config/corsOptions")
 const connectDB=require("./config/dbConn")
 const upload = require('./middleware/uploads');
-const verifyJWT = require('./middleware/verifyJWT');
+// const verifyJWT = require('./middleware/verifyJWT');
 
 connectDB()
 const app=express()
@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(express.static("public"))
 
 app.use("/api/auth",require('./routs/autherRouts'))
-app.use("/api/products",verifyJWT,require("./routs/productRouts"))
+app.use("/api/products",require("./routs/productRouts"))
 app.use('/api/user',require('./routs/userRouts'))
 app.post('/api/uploads',upload.single('image'),(req,res)=>{
     res.json(req.file)
